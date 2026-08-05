@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>นักผจญภัยอาเซียน · ASEAN Adventure</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,9 +24,9 @@
   --shadow-inset:inset 0 0 0 2px rgba(255,255,255,.6);
   --font-display:'Baloo 2', 'Sarabun', sans-serif;
   --font-body:'Sarabun', -apple-system, sans-serif;
-  --nav-h:74px;
-  --safe-b:env(safe-area-inset-bottom,0px);
-  --safe-t:env(safe-area-inset-top,0px);
+  --nav-h:68px;
+  --safe-b:env(safe-area-inset-bottom, 0px);
+  --safe-t:env(safe-area-inset-top, 0px);
 }
 body.dark-mode{
   --cream:#1b2540; --paper:#22305a; --paper-dark:#1a2547;
@@ -37,33 +37,50 @@ body.a11y-mode{ --sea:#0033ff; --coral:#cc0000; --ink:#000; }
 body.a11y-mode .btn{ font-weight:800; }
 
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;user-select:none;}
-html,body{width:100%;height:100%;font-family:var(--font-body);color:var(--ink);overflow:hidden;}
-body{background:#081226;display:flex;align-items:center;justify-content:center;-webkit-font-smoothing:antialiased;}
+html,body{
+  width:100%;
+  height:100%;
+  height:100dvh;
+  font-family:var(--font-body);
+  color:var(--ink);
+  overflow:hidden;
+}
+body{
+  background:#081226;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  -webkit-font-smoothing:antialiased;
+}
 h1,h2,h3,.btn,.pill,.nav-label,.headline{font-family:var(--font-display);}
 
 @keyframes floaty{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-14px) rotate(2deg)}}
 @keyframes floaty2{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-9px) rotate(-2deg)}}
-@keyframes spinSlow{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@keyframes spinSlow{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 @keyframes flyAcross{0%{transform:translate(-20vw,10px) rotate(6deg) scale(.85)}50%{transform:translate(45vw,-26px) rotate(-2deg) scale(1.05)}100%{transform:translate(120vw,14px) rotate(6deg) scale(.85)}}
 @keyframes popIn{0%{opacity:0;transform:scale(.6) translateY(10px)}70%{transform:scale(1.06)}100%{opacity:1;transform:scale(1) translateY(0)}}
 @keyframes screenIn{0%{opacity:0;transform:translateY(18px) scale(.98)}100%{opacity:1;transform:translateY(0) scale(1)}}
 @keyframes drift{0%{transform:translateX(-15%)}100%{transform:translateX(115%)}}
 @keyframes stampSlam{0%{opacity:0;transform:scale(2.4) rotate(-18deg)}55%{opacity:1;transform:scale(.9) rotate(-6deg)}75%{transform:scale(1.06) rotate(-8deg)}100%{opacity:1;transform:scale(1) rotate(-6deg)}}
 @keyframes navBounce{0%{transform:translateY(0) scale(1)}35%{transform:translateY(-9px) scale(1.12)}100%{transform:translateY(0) scale(1)}}
-@keyframes shine{0%{background-position:-160% 0}100%{background-position:160% 0}}
 @keyframes shakeX{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
-@keyframes ringPulse{0%{box-shadow:0 0 0 0 rgba(255,201,60,.55)}100%{box-shadow:0 0 0 16px rgba(255,201,60,0)}}
 @keyframes barFill{from{width:0}}
-@keyframes confettiPop{0%{transform:scale(0)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
 .reduce-motion *{animation:none !important;transition:none !important;}
 
 #app{
-  position:relative; width:100vw; height:100vh; overflow:hidden;
+  position:relative;
+  width:100vw;
+  height:100vh;
+  height:calc(var(--vh, 1vh) * 100);
+  height:100dvh;
+  overflow:hidden;
   background:linear-gradient(180deg,var(--sky-top) 0%, var(--sky-mid) 45%, var(--sky-bottom) 100%);
-  display:flex; flex-direction:column; isolation:isolate;
+  display:flex;
+  flex-direction:column;
+  isolation:isolate;
 }
 @media (min-aspect-ratio:4/3){
-  #app{ width:min(100vw, calc(100vh * 9 / 16)); height:100vh; box-shadow:0 0 80px rgba(0,0,0,.55); }
+  #app{ width:min(100vw, calc(100vh * 9 / 16)); height:100dvh; box-shadow:0 0 80px rgba(0,0,0,.55); }
 }
 #app::before,#app::after{
   content:""; position:absolute; width:210px; height:64px; background:rgba(255,255,255,.8);
@@ -75,8 +92,14 @@ h1,h2,h3,.btn,.pill,.nav-label,.headline{font-family:var(--font-display);}
 #fx-canvas{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:40; }
 
 .topbar{
-  position:relative; z-index:12; padding:calc(10px + var(--safe-t)) 14px 10px;
-  display:flex; align-items:center; justify-content:space-between; gap:8px;
+  position:relative;
+  z-index:12;
+  flex-shrink:0;
+  padding:calc(8px + var(--safe-t)) 14px 8px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
 }
 .brand{ display:flex; align-items:center; gap:8px; cursor:pointer; }
 .brand-badge{
@@ -94,29 +117,46 @@ h1,h2,h3,.btn,.pill,.nav-label,.headline{font-family:var(--font-display);}
 .pill.pop{ animation:navBounce .38s ease; }
 
 .view{
-  position:absolute; inset:0; top:64px; bottom:var(--nav-h); overflow-y:auto; -webkit-overflow-scrolling:touch;
-  padding:6px 16px calc(18px + var(--safe-b)); display:none; z-index:2;
+  position:relative;
+  flex:1;
+  width:100%;
+  height:100%;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  padding:6px 16px 20px;
+  display:none;
+  z-index:2;
 }
 .view.active{ display:block; animation:screenIn .32s cubic-bezier(.22,1,.36,1); }
 .view::-webkit-scrollbar{ width:0; }
 
 .bottom-nav{
-  position:absolute; left:0; right:0; bottom:0; height:calc(var(--nav-h) + var(--safe-b));
-  padding-bottom:var(--safe-b); background:rgba(255,255,255,.9); backdrop-filter:blur(16px);
-  -webkit-backdrop-filter:blur(16px); border-top:1px solid rgba(255,255,255,.7);
-  box-shadow:0 -6px 20px rgba(16,34,70,.14); display:flex; z-index:20;
+  position:relative;
+  flex-shrink:0;
+  width:100%;
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border-top:1px solid rgba(255,255,255,.7);
+  box-shadow:0 -6px 20px rgba(16,34,70,.14);
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  padding-bottom:calc(4px + var(--safe-b));
+  padding-top:4px;
+  z-index:20;
 }
 body.dark-mode .bottom-nav{ background:rgba(20,28,54,.92); }
 .nav-btn{
   flex:1; border:none; background:transparent; display:flex; flex-direction:column; align-items:center;
   justify-content:center; gap:2px; color:var(--ink-faint); font-family:var(--font-display); font-weight:700;
-  font-size:.66rem; cursor:pointer; padding-top:6px;
+  font-size:.66rem; cursor:pointer; padding:6px 0;
 }
 .nav-btn .ico{ font-size:1.32rem; transition:transform .2s; }
 .nav-btn.active{ color:var(--sea-deep); }
 .nav-btn.active .ico{ animation:navBounce .38s ease; }
 .nav-btn.active::before{
-  content:""; position:absolute; margin-top:-30px; width:34px; height:34px; border-radius:12px;
+  content:""; position:absolute; margin-top:-26px; width:34px; height:34px; border-radius:12px;
   background:linear-gradient(160deg,#dff1ff,#bfe4ff); z-index:-1;
 }
 
@@ -158,29 +198,54 @@ body.dark-mode .bottom-nav{ background:rgba(20,28,54,.92); }
   margin-bottom:8px;
 }
 .main-title{
-  font-size:2.5rem; font-weight:800; color:#fff; line-height:1.05; margin-bottom:6px;
+  font-size:2.3rem; font-weight:800; color:#fff; line-height:1.05; margin-bottom:6px;
   -webkit-text-stroke:1.2px var(--sea-deep); text-shadow:0 5px 0 var(--sea-deep), 0 10px 18px rgba(10,40,80,.4);
 }
-.hero-sub{ color:#fff; font-size:.98rem; text-shadow:0 2px 4px rgba(0,0,0,.35); max-width:320px; margin:0 auto; }
+.hero-sub{ color:#fff; font-size:.92rem; text-shadow:0 2px 4px rgba(0,0,0,.35); max-width:320px; margin:0 auto; }
 .creator-credit{
-  margin-top:8px; font-size:.8rem; color:rgba(255,255,255,.95); background:rgba(19,35,82,.35);
+  margin-top:8px; font-size:.78rem; color:rgba(255,255,255,.95); background:rgba(19,35,82,.35);
   padding:4px 14px; border-radius:20px; backdrop-filter:blur(4px); display:inline-block; font-weight:600;
   border:1px solid rgba(255,255,255,.25); text-shadow:0 1px 2px rgba(0,0,0,.3);
 }
-.globe-wrap{ width:172px; height:172px; margin:14px auto 6px; position:relative; }
-.globe-wrap .ring{ position:absolute; inset:-10px; border-radius:50%; border:3px dashed rgba(255,255,255,.55); animation:spinSlow 22s linear infinite; }
-.globe-svg{ width:100%; height:100%; animation:spinSlow 26s linear infinite; filter:drop-shadow(0 14px 18px rgba(10,40,80,.4)); }
-.hero-cta{ display:flex; flex-direction:column; gap:10px; width:100%; max-width:300px; margin-top:14px; }
-.hero-secondary{ display:flex; gap:10px; margin-top:10px; }
+
+/* CSS สำหรับอิโมจิโลกหมุนกลางจอ */
+.globe-wrap{
+  width:140px;
+  height:140px;
+  margin:14px auto 8px;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.globe-wrap .ring{
+  position:absolute;
+  inset:-12px;
+  border-radius:50%;
+  border:3px dashed rgba(255,255,255,.65);
+  animation:spinSlow 20s linear infinite;
+}
+.emoji-globe{
+  font-size:6.2rem;
+  line-height:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  animation:spinSlow 25s linear infinite;
+  filter:drop-shadow(0 12px 18px rgba(10,40,80,.35));
+}
+
+.hero-cta{ display:flex; flex-direction:column; gap:10px; width:100%; max-width:300px; margin-top:12px; }
+.hero-secondary{ display:flex; gap:10px; margin-top:10px; width:100%; max-width:300px; }
 .hero-secondary .btn{ flex:1; padding:11px 8px; font-size:.82rem; }
 
-.stat-row{ display:flex; gap:10px; margin-top:20px; }
+.stat-row{ display:flex; gap:10px; margin-top:16px; width:100%; max-width:360px; }
 .stat-card{
-  flex:1; background:rgba(255,255,255,.92); border-radius:var(--radius-md); padding:12px 8px; text-align:center;
+  flex:1; background:rgba(255,255,255,.92); border-radius:var(--radius-md); padding:10px 6px; text-align:center;
   box-shadow:var(--shadow-card), var(--shadow-inset);
 }
-.stat-card .big{ font-family:var(--font-display); font-weight:800; font-size:1.15rem; color:var(--sea-deep); }
-.stat-card .lbl{ font-size:.68rem; color:var(--ink-soft); font-weight:600; }
+.stat-card .big{ font-family:var(--font-display); font-weight:800; font-size:1.1rem; color:var(--sea-deep); }
+.stat-card .lbl{ font-size:.65rem; color:var(--ink-soft); font-weight:600; }
 
 .section-heading{ color:#fff; text-shadow:0 2px 6px rgba(10,30,60,.35); font-size:1.28rem; font-weight:800; margin:8px 0 14px; text-align:center; }
 .section-sub{ color:rgba(255,255,255,.85); text-align:center; font-size:.82rem; margin-top:-8px; margin-bottom:14px; }
@@ -334,7 +399,7 @@ input:checked + .slider::before{ transform:translateX(20px); }
 .code-msg.ok{ color:var(--leaf-deep); }
 
 @media (max-width:340px){
-  .main-title{ font-size:2.1rem; }
+  .main-title{ font-size:1.9rem; }
   .country-grid{ gap:10px; }
 }
 </style>
@@ -365,13 +430,10 @@ input:checked + .slider::before{ transform:translateX(20px); }
       <p class="hero-sub">ออกเดินทาง เรียนรู้วัฒนธรรม พิชิตคำถาม และสะสมตราประทับพาสปอร์ตให้ครบทุกประเทศ!</p>
       <div class="creator-credit">จัดทำโดย จิราภา หยุยจันทึก</div>
 
+      <!-- โลกอิโมจิแบบหมุนได้ -->
       <div class="globe-wrap">
         <div class="ring"></div>
-        <svg class="globe-svg" viewBox="0 0 100 100">
-          <circle cx="50" cy="50" r="46" fill="#2a98ee" stroke="#ffffff" stroke-width="2.5"/>
-          <path d="M 28,32 C 30,20 68,18 74,34 C 80,48 62,76 46,76 C 30,76 24,48 28,32 Z" fill="#28c76f"/>
-          <path d="M 35,52 C 42,46 58,54 52,70 C 44,75 37,68 35,52 Z" fill="#7de8ab"/>
-        </svg>
+        <div class="emoji-globe">🌏</div>
       </div>
 
       <div class="hero-cta">
@@ -544,6 +606,14 @@ input:checked + .slider::before{ transform:translateX(20px); }
 </div>
 
 <script>
+function setRealViewportHeight() {
+  let vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+window.addEventListener('resize', setRealViewportHeight);
+window.addEventListener('orientationchange', setRealViewportHeight);
+setRealViewportHeight();
+
 class SoundSynthesizer {
   constructor(){ this.ctx=null; this.sfxEnabled=true; this.bgmEnabled=true; this.bgmInterval=null; }
   initCtx(){ if(!this.ctx){ const AC=window.AudioContext||window.webkitAudioContext; this.ctx=new AC(); } }
@@ -985,7 +1055,6 @@ class QuizController {
 }
 const QuizEngine = new QuizController();
 
-// รายการไอเทมร้านค้า 21 รายการเต็มรูปแบบ
 const ShopItems = [
   { id:"frame_gold", name:"กรอบทองคำแท้", price:100, icon:"🖼️", desc:"กรอบโปรไฟล์ทองคำหรูหราประดับฉายา" },
   { id:"plane_jet", name:"เครื่องบินเจ็ทส่วนตัว", price:200, icon:"🛩️", desc:"สกินเครื่องบินความเร็วสูงประจำตัว" },
@@ -1007,12 +1076,11 @@ const ShopItems = [
   { id:"instrument_gamelan", name:"เครื่องดนตรีโบราณ", price:220, icon:"🪕", desc:"บทเพลงพื้นเมืองขับกล่อมตลอดการเดินทาง" },
   { id:"title_legend", name:"ฉายา: ตำนานเดินได้", price:2000, icon:"🌟", desc:"สุดยอดฉายาของผู้พิชิตทุกคำถามอาเซียน" },
   { id:"stamp_collector", name:"กล่องสะสมตราประทับ", price:300, icon:"📦", desc:"กล่องหรูหราสำหรับจัดเก็บทุกตราประทับ" },
-  { id:"troll_tiny", name:"ฉายา: กระดอเล็กตลอดกาล", price:0, icon:"🤏", desc:"กดรับฉายาลับ ล็อคแต้มที่ 55,555 และล็อคไม่ให้ซื้อไอเทมอื่นอีก!" }
+  { id:"troll_tiny", name:"ฉายา: กระดอเล็กตลอดกาล", price:0, icon:"🤏", desc:"กดรับฉายาลลับ ล็อคแต้มที่ 55,555 และล็อคไม่ให้ซื้อไอเทมอื่นอีก!" }
 ];
 
 const ShopEngine = {
   buyItem(itemId, price){
-    // ถ้าเคยซื้อไอเทมกวน "🤏 กระดอเล็กตลอดกาล" ไปแล้ว ห้ามซื้ออย่างอื่นอีกเด็ดขาด
     if(GameState.state.isLockedTiny && itemId !== "troll_tiny"){
       alert("🔒 ไม่สามารถซื้อไอเทมอื่นได้อีก! เพราะคุณมีฉายา 'กระดอเล็กตลอดกาล' และร้านค้าถูกล็อคแล้ว");
       return;
