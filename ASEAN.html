@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>นักผจญภัยอาเซียน · ASEAN Adventure</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky-top:#cdeeff; --sky-mid:#7fcdfd; --sky-bottom:#1f8fe0;
+  --cream:#fff9ec; --paper:#f4e6c2; --paper-dark:#e9d5a3;
+  --ink:#152a52; --ink-soft:#5f6f92; --ink-faint:#93a0bd;
+  --gold:#ffc93c; --gold-deep:#e08a00; --gold-light:#ffe49a;
+  --coral:#ff6f59; --coral-deep:#d43f2c;
+  --leaf:#33d17a; --leaf-deep:#1a9955;
+  --sea:#2e97ec; --sea-deep:#14599e;
+  --stamp-red:#c1272d;
+  --passport-navy:#132352;
+  --radius-xl:28px; --radius-lg:22px; --radius-md:16px; --radius-sm:10px;
+  --shadow-card:0 10px 22px rgba(16,34,70,.16);
+  --shadow-pop:0 18px 34px rgba(16,34,70,.30);
+  --shadow-inset:inset 0 0 0 2px rgba(255,255,255,.6);
+  --font-display:'Baloo 2', 'Sarabun', sans-serif;
+  --font-body:'Sarabun', -apple-system, sans-serif;
+  --nav-h:74px;
+  --safe-b:env(safe-area-inset-bottom,0px);
+  --safe-t:env(safe-area-inset-top,0px);
+}
+body.dark-mode{
+  --cream:#1b2540; --paper:#22305a; --paper-dark:#1a2547;
+  --ink:#f3f6ff; --ink-soft:#aab6da; --ink-faint:#6c7aa0;
+  --sky-top:#0c1530; --sky-mid:#132049; --sky-bottom:#0a1226;
+}
+body.a11y-mode{ --sea:#0033ff; --coral:#cc0000; --ink:#000; }
+body.a11y-mode .btn{ font-weight:800; }
+
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;user-select:none;}
+html,body{width:100%;height:100%;font-family:var(--font-body);color:var(--ink);overflow:hidden;}
+body{background:#081226;display:flex;align-items:center;justify-content:center;-webkit-font-smoothing:antialiased;}
+h1,h2,h3,.btn,.pill,.nav-label,.headline{font-family:var(--font-display);}
+
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-14px) rotate(2deg)}}
+@keyframes floaty2{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-9px) rotate(-2deg)}}
+@keyframes spinSlow{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@keyframes flyAcross{0%{transform:translate(-20vw,10px) rotate(6deg) scale(.85)}50%{transform:translate(45vw,-26px) rotate(-2deg) scale(1.05)}100%{transform:translate(120vw,14px) rotate(6deg) scale(.85)}}
+@keyframes popIn{0%{opacity:0;transform:scale(.6) translateY(10px)}70%{transform:scale(1.06)}100%{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes screenIn{0%{opacity:0;transform:translateY(18px) scale(.98)}100%{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes drift{0%{transform:translateX(-15%)}100%{transform:translateX(115%)}}
+@keyframes stampSlam{0%{opacity:0;transform:scale(2.4) rotate(-18deg)}55%{opacity:1;transform:scale(.9) rotate(-6deg)}75%{transform:scale(1.06) rotate(-8deg)}100%{opacity:1;transform:scale(1) rotate(-6deg)}}
+@keyframes navBounce{0%{transform:translateY(0) scale(1)}35%{transform:translateY(-9px) scale(1.12)}100%{transform:translateY(0) scale(1)}}
+@keyframes shine{0%{background-position:-160% 0}100%{background-position:160% 0}}
+@keyframes shakeX{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+@keyframes ringPulse{0%{box-shadow:0 0 0 0 rgba(255,201,60,.55)}100%{box-shadow:0 0 0 16px rgba(255,201,60,0)}}
+@keyframes barFill{from{width:0}}
+@keyframes confettiPop{0%{transform:scale(0)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
+.reduce-motion *{animation:none !important;transition:none !important;}
+
+#app{
+  position:relative; width:100vw; height:100vh; overflow:hidden;
+  background:linear-gradient(180deg,var(--sky-top) 0%, var(--sky-mid) 45%, var(--sky-bottom) 100%);
+  display:flex; flex-direction:column; isolation:isolate;
+}
+@media (min-aspect-ratio:4/3){
+  #app{ width:min(100vw, calc(100vh * 9 / 16)); height:100vh; box-shadow:0 0 80px rgba(0,0,0,.55); }
+}
+#app::before,#app::after{
+  content:""; position:absolute; width:210px; height:64px; background:rgba(255,255,255,.8);
+  border-radius:50px; filter:blur(1px); opacity:.75; z-index:0; pointer-events:none;
+  box-shadow:38px 18px 0 -6px rgba(255,255,255,.8), -46px 8px 0 -10px rgba(255,255,255,.8);
+}
+#app::before{ top:6%; animation:drift 30s linear infinite; }
+#app::after{ top:16%; width:150px; height:46px; animation:drift 21s linear infinite; animation-delay:-9s; opacity:.55; }
+#fx-canvas{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:40; }
+
+.topbar{
+  position:relative; z-index:12; padding:calc(10px + var(--safe-t)) 14px 10px;
+  display:flex; align-items:center; justify-content:space-between; gap:8px;
+}
+.brand{ display:flex; align-items:center; gap:8px; cursor:pointer; }
+.brand-badge{
+  width:36px; height:36px; border-radius:12px; background:linear-gradient(160deg,#fff, var(--gold-light));
+  display:flex; align-items:center; justify-content:center; font-size:1.2rem; box-shadow:var(--shadow-card);
+}
+.brand-title{ color:#fff; font-weight:800; font-size:1.02rem; text-shadow:0 2px 6px rgba(10,30,60,.4); letter-spacing:.2px; }
+.stat-pills{ display:flex; gap:6px; }
+.pill{
+  display:flex; align-items:center; gap:4px; background:rgba(255,255,255,.92); color:var(--ink);
+  padding:6px 10px; border-radius:30px; font-weight:700; font-size:.78rem; box-shadow:var(--shadow-card), var(--shadow-inset);
+}
+.pill.gold{ background:linear-gradient(180deg,#fff3c9,var(--gold)); color:#5c3800; }
+.pill.leaf{ background:linear-gradient(180deg,#b9f4d2,var(--leaf)); color:#0c4a29; }
+.pill.pop{ animation:navBounce .38s ease; }
+
+.view{
+  position:absolute; inset:0; top:64px; bottom:var(--nav-h); overflow-y:auto; -webkit-overflow-scrolling:touch;
+  padding:6px 16px calc(18px + var(--safe-b)); display:none; z-index:2;
+}
+.view.active{ display:block; animation:screenIn .32s cubic-bezier(.22,1,.36,1); }
+.view::-webkit-scrollbar{ width:0; }
+
+.bottom-nav{
+  position:absolute; left:0; right:0; bottom:0; height:calc(var(--nav-h) + var(--safe-b));
+  padding-bottom:var(--safe-b); background:rgba(255,255,255,.9); backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px); border-top:1px solid rgba(255,255,255,.7);
+  box-shadow:0 -6px 20px rgba(16,34,70,.14); display:flex; z-index:20;
+}
+body.dark-mode .bottom-nav{ background:rgba(20,28,54,.92); }
+.nav-btn{
+  flex:1; border:none; background:transparent; display:flex; flex-direction:column; align-items:center;
+  justify-content:center; gap:2px; color:var(--ink-faint); font-family:var(--font-display); font-weight:700;
+  font-size:.66rem; cursor:pointer; padding-top:6px;
+}
+.nav-btn .ico{ font-size:1.32rem; transition:transform .2s; }
+.nav-btn.active{ color:var(--sea-deep); }
+.nav-btn.active .ico{ animation:navBounce .38s ease; }
+.nav-btn.active::before{
+  content:""; position:absolute; margin-top:-30px; width:34px; height:34px; border-radius:12px;
+  background:linear-gradient(160deg,#dff1ff,#bfe4ff); z-index:-1;
+}
+
+.btn{
+  border:none; border-radius:50px; font-weight:700; cursor:pointer; font-family:var(--font-display);
+  display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:13px 24px; font-size:.96rem;
+  transition:transform .12s, box-shadow .12s, filter .12s; position:relative; color:#fff;
+}
+.btn:active{ transform:translateY(3px); filter:brightness(.97); }
+.btn-sea{ background:linear-gradient(180deg,#65c1ff,var(--sea)); box-shadow:0 5px 0 var(--sea-deep),0 8px 14px rgba(20,89,158,.3);}
+.btn-sea:active{ box-shadow:0 2px 0 var(--sea-deep); }
+.btn-gold{ background:linear-gradient(180deg,#ffe08a,var(--gold)); color:#5c3800; box-shadow:0 5px 0 var(--gold-deep),0 8px 14px rgba(224,138,0,.3);}
+.btn-gold:active{ box-shadow:0 2px 0 var(--gold-deep); }
+.btn-leaf{ background:linear-gradient(180deg,#7de8ab,var(--leaf)); box-shadow:0 5px 0 var(--leaf-deep),0 8px 14px rgba(26,153,85,.3);}
+.btn-leaf:active{ box-shadow:0 2px 0 var(--leaf-deep); }
+.btn-coral{ background:linear-gradient(180deg,#ff9a8c,var(--coral)); box-shadow:0 5px 0 var(--coral-deep),0 8px 14px rgba(212,63,44,.3);}
+.btn-coral:active{ box-shadow:0 2px 0 var(--coral-deep); }
+.btn-ghost{ background:rgba(255,255,255,.9); color:var(--ink); box-shadow:var(--shadow-card), var(--shadow-inset); }
+.btn:disabled{ filter:grayscale(.5) brightness(.95); cursor:not-allowed; }
+.btn-block{ width:100%; }
+.btn-lg{ padding:16px 30px; font-size:1.08rem; }
+
+.ripple{ overflow:hidden; }
+.ripple::after{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background-image:radial-gradient(circle,#fff 10%,transparent 10.4%); background-repeat:no-repeat; background-position:50%;
+  transform:scale(10); opacity:0; transition:transform .5s, opacity .9s;
+}
+.ripple:active::after{ transform:scale(0); opacity:.35; transition:0s; }
+
+.hero{ position:relative; padding-top:6px; text-align:center; display:flex; flex-direction:column; align-items:center; }
+.hero-balloon{ position:absolute; font-size:1.9rem; filter:drop-shadow(0 6px 8px rgba(0,0,0,.18)); }
+.hero-balloon.b1{ top:-4px; left:2%; animation:floaty 5s ease-in-out infinite; }
+.hero-balloon.b2{ top:8px; right:4%; font-size:1.5rem; animation:floaty2 6s ease-in-out infinite -1.4s; }
+.plane-fly{ position:absolute; top:26%; width:52px; animation:flyAcross 11s linear infinite; filter:drop-shadow(0 4px 6px rgba(0,0,0,.25)); z-index:3; }
+.title-ribbon{
+  display:inline-block; background:linear-gradient(180deg,#ff9a8c,var(--coral)); color:#fff; font-weight:700;
+  font-size:.82rem; padding:7px 18px; border-radius:30px; box-shadow:0 4px 0 var(--coral-deep),0 6px 10px rgba(0,0,0,.18);
+  margin-bottom:8px;
+}
+.main-title{
+  font-size:2.5rem; font-weight:800; color:#fff; line-height:1.05; margin-bottom:6px;
+  -webkit-text-stroke:1.2px var(--sea-deep); text-shadow:0 5px 0 var(--sea-deep), 0 10px 18px rgba(10,40,80,.4);
+}
+.hero-sub{ color:#fff; font-size:.98rem; text-shadow:0 2px 4px rgba(0,0,0,.35); max-width:320px; margin:0 auto; }
+.creator-credit{
+  margin-top:8px; font-size:.8rem; color:rgba(255,255,255,.95); background:rgba(19,35,82,.35);
+  padding:4px 14px; border-radius:20px; backdrop-filter:blur(4px); display:inline-block; font-weight:600;
+  border:1px solid rgba(255,255,255,.25); text-shadow:0 1px 2px rgba(0,0,0,.3);
+}
+.globe-wrap{ width:172px; height:172px; margin:14px auto 6px; position:relative; }
+.globe-wrap .ring{ position:absolute; inset:-10px; border-radius:50%; border:3px dashed rgba(255,255,255,.55); animation:spinSlow 22s linear infinite; }
+.globe-svg{ width:100%; height:100%; animation:spinSlow 26s linear infinite; filter:drop-shadow(0 14px 18px rgba(10,40,80,.4)); }
+.hero-cta{ display:flex; flex-direction:column; gap:10px; width:100%; max-width:300px; margin-top:14px; }
+.hero-secondary{ display:flex; gap:10px; margin-top:10px; }
+.hero-secondary .btn{ flex:1; padding:11px 8px; font-size:.82rem; }
+
+.stat-row{ display:flex; gap:10px; margin-top:20px; }
+.stat-card{
+  flex:1; background:rgba(255,255,255,.92); border-radius:var(--radius-md); padding:12px 8px; text-align:center;
+  box-shadow:var(--shadow-card), var(--shadow-inset);
+}
+.stat-card .big{ font-family:var(--font-display); font-weight:800; font-size:1.15rem; color:var(--sea-deep); }
+.stat-card .lbl{ font-size:.68rem; color:var(--ink-soft); font-weight:600; }
+
+.section-heading{ color:#fff; text-shadow:0 2px 6px rgba(10,30,60,.35); font-size:1.28rem; font-weight:800; margin:8px 0 14px; text-align:center; }
+.section-sub{ color:rgba(255,255,255,.85); text-align:center; font-size:.82rem; margin-top:-8px; margin-bottom:14px; }
+
+.country-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.country-card{
+  position:relative; background:var(--cream); border-radius:var(--radius-lg); padding:16px 12px 14px; text-align:center;
+  box-shadow:var(--shadow-card); border:3px solid #fff; cursor:pointer; transition:transform .18s, box-shadow .18s;
+}
+.country-card:active{ transform:scale(.96); }
+.country-card.locked{ filter:grayscale(.6) opacity(.75); }
+.flag-ring{
+  width:78px; height:78px; margin:0 auto 8px; border-radius:50%; border:4px solid var(--gold);
+  box-shadow:0 4px 10px rgba(0,0,0,.15), inset 0 0 0 3px #fff; overflow:hidden; display:flex; align-items:center; justify-content:center; background:#fff;
+}
+.flag-ring img{ width:100%; height:100%; object-fit:cover; }
+.country-card h3{ font-size:.92rem; color:var(--ink); font-weight:700; }
+.country-card .cap{ font-size:.68rem; color:var(--ink-soft); margin-top:2px; }
+.mini-bar{ height:8px; border-radius:8px; background:rgba(0,0,0,.08); overflow:hidden; margin-top:8px; box-shadow:inset 0 1px 2px rgba(0,0,0,.15); }
+.mini-bar-fill{ height:100%; background:linear-gradient(90deg,#33d17a,#8bf1b1); border-radius:8px; animation:barFill .6s ease; }
+.status-chip{
+  display:inline-block; margin-top:8px; font-size:.64rem; font-weight:700; padding:3px 10px; border-radius:20px; color:#fff;
+}
+.status-chip.done{ background:var(--leaf-deep); }
+.status-chip.ready{ background:var(--gold-deep); color:#fff; }
+.status-chip.locked{ background:#8b96b8; }
+.lock-badge{
+  position:absolute; top:8px; right:8px; width:26px; height:26px; border-radius:50%; background:rgba(20,30,60,.55);
+  display:flex; align-items:center; justify-content:center; font-size:.85rem;
+}
+
+.detail-card{ background:var(--cream); border-radius:var(--radius-xl); padding:18px; box-shadow:var(--shadow-card); }
+.detail-head{ display:flex; align-items:center; gap:14px; }
+.detail-head img{ width:88px; height:66px; object-fit:cover; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,.18); }
+.detail-head h2{ font-size:1.2rem; color:var(--sea-deep); }
+.detail-head p{ font-size:.76rem; color:var(--ink-soft); margin-top:2px; }
+.chip-row{ display:flex; flex-wrap:wrap; gap:6px; margin-top:14px; }
+.chip{ background:#fff; border-radius:20px; padding:6px 12px; font-size:.72rem; font-weight:600; box-shadow:var(--shadow-card); color:var(--ink); }
+.chip b{ color:var(--sea-deep); }
+.trivia-box{
+  background:linear-gradient(180deg,#fff3d0,#ffe9ab); border-radius:var(--radius-md); padding:14px; margin-top:16px;
+  border:2px dashed var(--gold-deep);
+}
+.trivia-box h4{ font-size:.92rem; color:#6b3f00; margin-bottom:8px; }
+.trivia-box ul{ margin-left:16px; font-size:.78rem; line-height:1.6; color:#4a3200; }
+
+.quiz-shell{ background:var(--cream); border-radius:var(--radius-xl); padding:18px; box-shadow:var(--shadow-card); }
+.quiz-top{ display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+.quiz-progress-text{ font-weight:800; color:var(--sea-deep); font-size:.86rem; }
+.combo-chip{ background:linear-gradient(180deg,#ffe08a,var(--gold)); padding:5px 12px; border-radius:14px; font-weight:800; font-size:.78rem; color:#5c3800; }
+.progress-track{ height:10px; background:rgba(0,0,0,.08); border-radius:10px; overflow:hidden; margin-bottom:16px; }
+.progress-fill{ height:100%; background:linear-gradient(90deg,var(--sea),#7fd6ff); border-radius:10px; transition:width .4s ease; }
+.quiz-question{ font-size:1.1rem; font-weight:700; color:var(--ink); line-height:1.5; background:#fff; border-radius:var(--radius-md); padding:16px; box-shadow:var(--shadow-inset), 0 3px 8px rgba(0,0,0,.06); }
+.options-grid{ display:grid; grid-template-columns:1fr; gap:10px; margin-top:16px; }
+.option-btn{
+  background:#fff; border:2px solid rgba(20,40,80,.1); border-radius:var(--radius-md); padding:14px 16px; font-size:.94rem;
+  text-align:left; font-family:var(--font-body); font-weight:600; color:var(--ink); cursor:pointer; transition:all .15s;
+  display:flex; align-items:center; gap:10px;
+}
+.option-btn:active{ transform:scale(.98); }
+.option-btn.correct{ background:linear-gradient(180deg,#d3f7e0,#b9f0cc) !important; border-color:var(--leaf-deep) !important; color:#0c4a29; }
+.option-btn.wrong{ background:linear-gradient(180deg,#ffdcd8,#ffc4bd) !important; border-color:var(--coral-deep) !important; color:#7a1c10; animation:shakeX .4s; }
+.exp-box{
+  display:none; margin-top:16px; padding:14px; border-radius:var(--radius-md); background:#eaf5ff; border-left:5px solid var(--sea);
+}
+.exp-box strong{ font-size:.96rem; }
+.exp-box p{ margin-top:5px; font-size:.82rem; color:var(--ink-soft); line-height:1.5; }
+
+.result-card{ background:var(--cream); border-radius:var(--radius-xl); padding:30px 22px; text-align:center; box-shadow:var(--shadow-card); margin-top:8px; }
+.result-emoji{ font-size:3.6rem; animation:popIn .5s cubic-bezier(.34,1.56,.64,1); }
+.result-card h2{ color:var(--sea-deep); font-size:1.3rem; margin-top:6px; }
+.result-card .score-line{ font-size:1rem; font-weight:700; margin-top:6px; }
+.result-card .exp-line{ color:var(--leaf-deep); font-weight:700; margin-top:2px; font-size:.9rem; }
+.stamp-callout{ margin:18px 0; padding:14px; background:#fff3d0; border-radius:var(--radius-md); font-size:.86rem; font-weight:600; color:#6b3f00; }
+.result-actions{ display:flex; gap:10px; flex-direction:column; }
+
+.passport-book{
+  background:var(--paper); border:10px solid var(--passport-navy); border-radius:24px; padding:18px; box-shadow:var(--shadow-pop);
+  background-image:repeating-linear-gradient(0deg, rgba(0,0,0,.02) 0 1px, transparent 1px 26px);
+}
+.passport-head{ display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid var(--paper-dark); padding-bottom:10px; }
+.passport-head h2{ font-size:1.02rem; color:var(--passport-navy); }
+.passport-head span{ font-size:.78rem; color:var(--ink-soft); font-weight:700; }
+.stamp-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:16px; }
+.stamp-slot{
+  aspect-ratio:1; border:3px dashed #a98a52; border-radius:50%; display:flex; flex-direction:column; align-items:center;
+  justify-content:center; opacity:.35; text-align:center; padding:6px;
+}
+.stamp-slot.unlocked{
+  opacity:1; border-style:solid; border-color:var(--stamp-red); color:var(--stamp-red);
+  box-shadow:0 0 0 3px rgba(193,39,45,.12); animation:stampSlam .5s cubic-bezier(.2,.9,.3,1.2);
+}
+.stamp-slot .ic{ font-size:1.5rem; }
+.stamp-slot .nm{ font-size:.62rem; font-weight:800; margin-top:2px; }
+.stamp-slot .st{ font-size:.54rem; letter-spacing:.5px; }
+
+.shop-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.shop-card{ background:var(--cream); border-radius:var(--radius-lg); padding:14px; text-align:center; box-shadow:var(--shadow-card); position:relative; }
+.shop-card .ic{ font-size:2.2rem; }
+.shop-card h4{ font-size:.82rem; margin-top:6px; color:var(--ink); }
+.shop-card p{ font-size:.66rem; color:var(--ink-soft); margin-top:3px; min-height:26px; }
+.shop-card .price{ margin-top:6px; font-weight:800; color:var(--gold-deep); font-size:.82rem; }
+
+.profile-card{ background:var(--cream); border-radius:var(--radius-xl); padding:20px; box-shadow:var(--shadow-card); }
+.profile-top{ display:flex; align-items:center; gap:14px; }
+.avatar-ring{
+  width:74px; height:74px; border-radius:50%; background:linear-gradient(160deg,#eaf5ff,#cfe8ff); display:flex; align-items:center;
+  justify-content:center; font-size:2.1rem; box-shadow:var(--shadow-inset), 0 3px 8px rgba(0,0,0,.1); border:3px solid var(--gold);
+}
+.profile-top h3{ font-size:1.05rem; }
+.profile-top .rank{ font-size:.78rem; color:var(--ink-soft); font-weight:700; }
+.profile-stats{ display:flex; gap:10px; margin-top:16px; }
+.ach-list{ margin-top:10px; max-height:260px; overflow-y:auto; }
+.ach-item{ display:flex; align-items:center; gap:10px; padding:10px; border-radius:12px; background:#fff; margin-bottom:8px; box-shadow:0 2px 6px rgba(0,0,0,.05); }
+.ach-item .ic{ font-size:1.5rem; }
+.ach-item strong{ font-size:.82rem; }
+.ach-item p{ font-size:.68rem; color:var(--ink-soft); }
+
+.settings-card{ background:var(--cream); border-radius:var(--radius-xl); padding:20px; box-shadow:var(--shadow-card); }
+.setting-row{ display:flex; justify-content:space-between; align-items:center; padding:12px 4px; border-bottom:1px solid rgba(0,0,0,.06); font-size:.88rem; font-weight:600; }
+.switch{ position:relative; width:46px; height:26px; }
+.switch input{ opacity:0; width:0; height:0; }
+.slider{ position:absolute; inset:0; background:#d7dded; border-radius:30px; transition:.2s; cursor:pointer; }
+.slider::before{ content:""; position:absolute; width:20px; height:20px; left:3px; top:3px; background:#fff; border-radius:50%; transition:.2s; box-shadow:0 1px 3px rgba(0,0,0,.3); }
+input:checked + .slider{ background:var(--leaf); }
+input:checked + .slider::before{ transform:translateX(20px); }
+.data-actions{ display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+.data-actions .btn{ font-size:.78rem; padding:10px 14px; }
+
+.ending-card{ background:rgba(255,252,244,.97); border-radius:var(--radius-xl); padding:26px 18px; text-align:center; box-shadow:var(--shadow-pop); margin-top:10px; }
+.ending-card h1{ font-size:1.7rem; color:var(--coral-deep); }
+.ending-card h2{ font-size:1rem; color:var(--sea-deep); margin-top:8px; }
+.ending-card p{ font-size:.86rem; margin-top:10px; }
+#cert-canvas{ width:100%; border-radius:12px; box-shadow:0 10px 20px rgba(0,0,0,.2); margin:18px 0; }
+
+.modal-overlay{
+  position:fixed; inset:0; background:rgba(8,15,30,.62); backdrop-filter:blur(4px); display:flex; align-items:center;
+  justify-content:center; z-index:100; opacity:0; pointer-events:none; transition:opacity .25s; padding:20px;
+}
+.modal-overlay.active{ opacity:1; pointer-events:auto; }
+.modal-card{ background:var(--cream); border-radius:var(--radius-xl); padding:26px 22px; max-width:380px; width:100%; box-shadow:0 24px 48px rgba(0,0,0,.35); text-align:center; }
+.modal-card input[type=text],.modal-card input[type=password]{
+  width:100%; margin-top:14px; padding:13px 14px; border-radius:14px; border:2px solid rgba(20,40,80,.15); font-size:1.05rem;
+  text-align:center; letter-spacing:2px; font-weight:800; font-family:var(--font-display); text-transform:uppercase; color:var(--ink); background:#fff;
+}
+.modal-card input:focus{ outline:none; border-color:var(--sea); }
+.modal-actions{ display:flex; gap:10px; margin-top:16px; }
+.modal-actions .btn{ flex:1; }
+.code-msg{ font-size:.78rem; margin-top:10px; font-weight:700; min-height:16px; }
+.code-msg.err{ color:var(--coral-deep); }
+.code-msg.ok{ color:var(--leaf-deep); }
+
+@media (max-width:340px){
+  .main-title{ font-size:2.1rem; }
+  .country-grid{ gap:10px; }
+}
+</style>
+</head>
+<body>
+
+<div id="app">
+  <canvas id="fx-canvas"></canvas>
+
+  <header class="topbar">
+    <div class="brand" id="brand-tap-zone">
+      <div class="brand-badge">🌏</div>
+      <div class="brand-title">นักผจญภัยอาเซียน</div>
+    </div>
+    <div class="stat-pills">
+      <div class="pill gold" id="pill-score">⭐ <span id="bar-score">0</span></div>
+      <div class="pill" id="pill-level">🚀 LV<span id="bar-level">1</span></div>
+    </div>
+  </header>
+
+  <section id="view-welcome" class="view active">
+    <div class="hero">
+      <div class="hero-balloon b1">🎈</div>
+      <div class="hero-balloon b2">🎈</div>
+      <div class="plane-fly">✈️</div>
+      <div class="title-ribbon">ผจญภัย 9 ประเทศอาเซียน</div>
+      <h1 class="main-title">นักผจญภัย<br>อาเซียน</h1>
+      <p class="hero-sub">ออกเดินทาง เรียนรู้วัฒนธรรม พิชิตคำถาม และสะสมตราประทับพาสปอร์ตให้ครบทุกประเทศ!</p>
+      <div class="creator-credit">จัดทำโดย จิราภา หยุยจันทึก</div>
+
+      <div class="globe-wrap">
+        <div class="ring"></div>
+        <svg class="globe-svg" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="46" fill="#2a98ee" stroke="#ffffff" stroke-width="2.5"/>
+          <path d="M 28,32 C 30,20 68,18 74,34 C 80,48 62,76 46,76 C 30,76 24,48 28,32 Z" fill="#28c76f"/>
+          <path d="M 35,52 C 42,46 58,54 52,70 C 44,75 37,68 35,52 Z" fill="#7de8ab"/>
+        </svg>
+      </div>
+
+      <div class="hero-cta">
+        <button class="btn btn-gold btn-lg ripple" onclick="Router.navigate('country-select')">🎮 เริ่มผจญภัย</button>
+      </div>
+      <div class="hero-secondary">
+        <button class="btn btn-ghost ripple" onclick="Router.navigate('passport')">📖 พาสปอร์ต</button>
+        <button class="btn btn-ghost ripple" onclick="Router.navigate('shop')">🛍️ ร้านค้า</button>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-card"><div class="big" id="home-countries">0/9</div><div class="lbl">ประเทศที่ผ่าน</div></div>
+        <div class="stat-card"><div class="big" id="home-score">0</div><div class="lbl">คะแนนสะสม</div></div>
+        <div class="stat-card"><div class="big" id="home-rank">Beginner</div><div class="lbl">ระดับ</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="view-country-select" class="view">
+    <h2 class="section-heading">🗺️ เลือกประเทศที่จะเดินทาง</h2>
+    <p class="section-sub">ผ่านแต่ละประเทศเพื่อปลดล็อกประเทศถัดไป</p>
+    <div class="country-grid" id="country-cards-container"></div>
+  </section>
+
+  <section id="view-country-detail" class="view">
+    <button class="btn btn-ghost ripple" style="margin-bottom:12px;" onclick="Router.navigate('country-select')">⬅️ กลับหน้าเลือกประเทศ</button>
+    <div class="detail-card" id="country-detail-content"></div>
+    <div style="text-align:center; margin-top:18px;">
+      <button class="btn btn-leaf btn-lg ripple" onclick="QuizEngine.startQuiz()">🎯 เริ่มทำแบบทดสอบ (10 ข้อ)</button>
+    </div>
+  </section>
+
+  <section id="view-quiz" class="view">
+    <div class="quiz-shell">
+      <div class="quiz-top">
+        <span class="quiz-progress-text" id="quiz-progress-text">ข้อที่ 1 / 10</span>
+        <span class="combo-chip">🔥 Combo x<span id="combo-multiplier">1</span></span>
+      </div>
+      <div class="progress-track"><div id="quiz-progress-bar" class="progress-fill" style="width:0%"></div></div>
+      <h3 class="quiz-question" id="quiz-question-text">คำถามจะแสดงที่นี่...</h3>
+      <div class="options-grid" id="quiz-options-container"></div>
+      <div class="exp-box" id="quiz-explanation-box">
+        <strong id="quiz-result-title">ถูกต้อง!</strong>
+        <p id="quiz-explanation-text"></p>
+        <button id="quiz-next-btn" class="btn btn-sea btn-block ripple" style="margin-top:12px;" onclick="QuizEngine.nextQuestion()">ข้อถัดไป ➡️</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="view-result" class="view">
+    <div class="result-card">
+      <div class="result-emoji" id="result-emoji">🏆</div>
+      <h2>สรุปผลการผจญภัย</h2>
+      <p class="score-line" id="result-score-text">คะแนนที่ได้: 0 คะแนน</p>
+      <p class="exp-line" id="result-exp-gained">+0 EXP</p>
+      <div class="stamp-callout" id="result-stamp-unlocked-box">🎉 คุณได้รับตราประทับพาสปอร์ตใหม่!</div>
+      <div class="result-actions">
+        <button class="btn btn-sea ripple" onclick="Router.navigate('country-select')">🗺️ เลือกประเทศอื่น</button>
+        <button class="btn btn-gold ripple" onclick="Router.navigate('passport')">📖 ดูพาสปอร์ต</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="view-passport" class="view">
+    <div class="passport-book">
+      <div class="passport-head">
+        <h2>📖 PASSPORT</h2>
+        <span>ผ่านแล้ว <strong id="passport-completed-count">0</strong>/9</span>
+      </div>
+      <div class="stamp-grid" id="passport-stamps-container"></div>
+    </div>
+  </section>
+
+  <section id="view-shop" class="view">
+    <h2 class="section-heading">🛍️ ร้านของรางวัล (21 รายการ)</h2>
+    <p class="section-sub">ใช้คะแนนสะสมแลกไอเทมสุดพิเศษ</p>
+    <div class="shop-grid" id="shop-items-container"></div>
+  </section>
+
+  <section id="view-profile" class="view">
+    <div class="profile-card">
+      <div class="profile-top">
+        <div class="avatar-ring" id="profile-avatar-display">🧑‍✈️</div>
+        <div>
+          <h3 id="profile-name-display">นักเดินทาง</h3>
+          <div class="rank" id="profile-rank-display">Beginner Explorer</div>
+        </div>
+      </div>
+      <div class="profile-stats">
+        <div class="stat-card"><div class="big" id="profile-total-score">0</div><div class="lbl">คะแนนรวม</div></div>
+        <div class="stat-card"><div class="big" id="achievement-unlocked-count">0</div><div class="lbl">ความสำเร็จ</div></div>
+      </div>
+      <h3 style="margin-top:18px; font-size:.92rem;">🏆 ความสำเร็จล่าสุด</h3>
+      <div class="ach-list" id="achievements-list-container"></div>
+    </div>
+  </section>
+
+  <section id="view-settings" class="view">
+    <h2 class="section-heading">⚙️ ตั้งค่า</h2>
+    <div class="settings-card">
+      <div class="setting-row"><span>🔊 เอฟเฟกต์เสียง</span><label class="switch"><input type="checkbox" id="setting-sfx-toggle" checked onchange="AudioEngine.toggleSFX(this.checked)"><span class="slider"></span></label></div>
+      <div class="setting-row"><span>🎵 เพลงประกอบ</span><label class="switch"><input type="checkbox" id="setting-bgm-toggle" checked onchange="AudioEngine.toggleBGM(this.checked)"><span class="slider"></span></label></div>
+      <div class="setting-row"><span>🌙 โหมดมืด</span><label class="switch"><input type="checkbox" id="setting-dark-toggle" onchange="ThemeManager.toggleDarkMode(this.checked)"><span class="slider"></span></label></div>
+      <div class="setting-row"><span>♿ โหมดคอนทราสต์สูง</span><label class="switch"><input type="checkbox" id="setting-a11y-toggle" onchange="ThemeManager.toggleA11y(this.checked)"><span class="slider"></span></label></div>
+      <div class="setting-row"><span>🎬 ลดแอนิเมชัน</span><label class="switch"><input type="checkbox" id="setting-motion-toggle" onchange="ThemeManager.toggleReduceMotion(this.checked)"><span class="slider"></span></label></div>
+      
+      <div class="setting-row" style="flex-direction:column; align-items:flex-start; gap:8px;">
+        <span>🎁 กรอกโค้ดรับรางวัล</span>
+        <div style="display:flex; gap:8px; width:100%;">
+          <input type="text" id="setting-redeem-input" placeholder="กรอกโค้ดลับ..." style="flex:1; padding:8px 12px; border-radius:12px; border:1px solid rgba(20,40,80,.2); font-weight:bold; text-transform:uppercase;">
+          <button class="btn btn-gold ripple" style="padding:8px 16px; font-size:.82rem;" onclick="RedeemEngine.submitSettingCode()">ใช้งาน</button>
+        </div>
+      </div>
+
+      <h3 style="margin-top:16px; font-size:.86rem;">📂 จัดการข้อมูลเซฟ</h3>
+      <div class="data-actions">
+        <button class="btn btn-sea ripple" onclick="StorageEngine.exportSaveJSON()">📥 Export Save</button>
+        <button class="btn btn-gold ripple" onclick="document.getElementById('import-file-input').click()">📤 Import Save</button>
+        <input type="file" id="import-file-input" style="display:none;" accept=".json" onchange="StorageEngine.importSaveJSON(event)">
+        <button class="btn btn-coral ripple" onclick="StorageEngine.resetGameData()">⚠️ รีเซ็ตข้อมูล</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="view-ending" class="view">
+    <div class="ending-card">
+      <h1>🎉 ยินดีด้วย!</h1>
+      <h2>คุณพิชิตครบทั้ง 9 ประเทศอาเซียนสำเร็จแล้ว</h2>
+      <p>คุณคือ <strong>ASEAN Master</strong> ผู้เชี่ยวชาญด้านภูมิศาสตร์และวัฒนธรรมอาเซียนตัวจริง</p>
+      <canvas id="cert-canvas" width="800" height="550"></canvas>
+      <div class="result-actions">
+        <button class="btn btn-leaf ripple" onclick="CertificateEngine.downloadCertificate()">📥 ดาวน์โหลดใบประกาศนียบัตร</button>
+        <button class="btn btn-ghost ripple" onclick="window.print()">🖨️ พิมพ์</button>
+      </div>
+    </div>
+  </section>
+
+  <nav class="bottom-nav" id="bottom-nav">
+    <button class="nav-btn active ripple" data-view="welcome" onclick="Router.navigate('welcome')"><span class="ico">🏠</span>หน้าแรก</button>
+    <button class="nav-btn ripple" data-view="country-select" onclick="Router.navigate('country-select')"><span class="ico">🗺️</span>แผนที่</button>
+    <button class="nav-btn ripple" data-view="passport" onclick="Router.navigate('passport')"><span class="ico">📖</span>พาสปอร์ต</button>
+    <button class="nav-btn ripple" data-view="shop" onclick="Router.navigate('shop')"><span class="ico">🛍️</span>ร้านค้า</button>
+    <button class="nav-btn ripple" data-view="profile" onclick="Router.navigate('profile')"><span class="ico">👤</span>โปรไฟล์</button>
+    <button class="nav-btn ripple" data-view="settings" onclick="Router.navigate('settings')"><span class="ico">⚙️</span>ตั้งค่า</button>
+  </nav>
+</div>
+
+<div class="modal-overlay" id="achievement-modal">
+  <div class="modal-card" style="animation:popIn .4s cubic-bezier(.34,1.56,.64,1);">
+    <div style="font-size:3.2rem;">🏆</div>
+    <h3 style="color:var(--gold-deep); margin-top:8px; font-family:var(--font-display);">ปลดล็อกความสำเร็จใหม่!</h3>
+    <h4 id="achieve-title" style="margin-top:6px; font-size:1.05rem;"></h4>
+    <p id="achieve-desc" style="color:var(--ink-soft); margin-top:6px; font-size:.82rem;"></p>
+    <button class="btn btn-sea btn-block ripple" style="margin-top:18px;" onclick="document.getElementById('achievement-modal').classList.remove('active')">รับทราบ!</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="secret-modal">
+  <div class="modal-card" style="animation:popIn .35s cubic-bezier(.34,1.56,.64,1);">
+    <div style="font-size:2.4rem;">🔐</div>
+    <h3 style="margin-top:6px; font-family:var(--font-display); color:var(--ink);">โหมดนักพัฒนา</h3>
+    <p style="color:var(--ink-soft); font-size:.8rem; margin-top:6px;">กรอกรหัสลับเพื่อปลดล็อกสิทธิพิเศษ</p>
+    <input type="text" id="secret-code-input" autocomplete="off" spellcheck="false" placeholder="••••">
+    <div class="code-msg" id="secret-code-msg"></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost ripple" onclick="SecretCodeEngine.close()">ยกเลิก</button>
+      <button class="btn btn-gold ripple" onclick="SecretCodeEngine.submit()">ยืนยัน</button>
+    </div>
+  </div>
+</div>
+
+<script>
+class SoundSynthesizer {
+  constructor(){ this.ctx=null; this.sfxEnabled=true; this.bgmEnabled=true; this.bgmInterval=null; }
+  initCtx(){ if(!this.ctx){ const AC=window.AudioContext||window.webkitAudioContext; this.ctx=new AC(); } }
+  playTone(freq,type='sine',duration=0.2,gainVal=0.1){
+    if(!this.sfxEnabled) return; this.initCtx();
+    const osc=this.ctx.createOscillator(), gain=this.ctx.createGain();
+    osc.type=type; osc.frequency.setValueAtTime(freq,this.ctx.currentTime);
+    gain.gain.setValueAtTime(gainVal,this.ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.0001,this.ctx.currentTime+duration);
+    osc.connect(gain); gain.connect(this.ctx.destination); osc.start(); osc.stop(this.ctx.currentTime+duration);
+  }
+  playCorrectSFX(){ if(!this.sfxEnabled) return; this.playTone(523.25,'triangle',0.1,0.15); setTimeout(()=>this.playTone(659.25,'triangle',0.1,0.15),80); setTimeout(()=>this.playTone(783.99,'triangle',0.25,0.15),160); }
+  playWrongSFX(){ if(!this.sfxEnabled) return; this.playTone(220,'sawtooth',0.15,0.2); setTimeout(()=>this.playTone(180,'sawtooth',0.3,0.2),120); }
+  playUnlockSFX(){ if(!this.sfxEnabled) return; [440,554.37,659.25,880].forEach((f,i)=>setTimeout(()=>this.playTone(f,'sine',0.2,0.15),i*70)); }
+  toggleSFX(v){ this.sfxEnabled=v; }
+  toggleBGM(v){ this.bgmEnabled=v; if(v) this.startBGM(); else this.stopBGM(); }
+  startBGM(){ if(!this.bgmEnabled||this.bgmInterval) return; const m=[261.63,329.63,392.0,329.63]; let i=0; this.bgmInterval=setInterval(()=>{ if(this.bgmEnabled){ this.playTone(m[i],'sine',0.4,0.02); i=(i+1)%m.length; } },800); }
+  stopBGM(){ if(this.bgmInterval){ clearInterval(this.bgmInterval); this.bgmInterval=null; } }
+}
+const AudioEngine = new SoundSynthesizer();
+
+const MAX_SCORE_CAP = 999999999;
+
+class StateManager {
+  constructor(){
+    this.defaultState={
+      score:0, exp:0, level:1, rank:"Beginner Explorer",
+      unlockedCountries:["TH"], completedCountries:[], countryProgress:{},
+      achievements:[], inventory:[], activeFrame:"default", activeTitle:"นักเดินทางมือใหม่",
+      neverDecrease:false, isLockedTiny:false,
+      settings:{ sfx:true, bgm:true, dark:false, a11y:false, motion:false }
+    };
+    this.state=this.loadState();
+  }
+  loadState(){
+    const saved=localStorage.getItem('ASEAN_ADVENTURE_SAVE');
+    if(saved){ try{ return {...this.defaultState, ...JSON.parse(saved)}; } catch(e){ return {...this.defaultState}; } }
+    return {...this.defaultState};
+  }
+  saveState(){ 
+    if(this.state.isLockedTiny){
+      this.state.score = 55555;
+      this.state.rank = "กระดอเล็กตลอดกาล";
+      this.state.activeTitle = "กระดอเล็กตลอดกาล";
+    } else if(this.state.score > MAX_SCORE_CAP){
+      this.state.score = MAX_SCORE_CAP;
+    }
+    localStorage.setItem('ASEAN_ADVENTURE_SAVE', JSON.stringify(this.state)); 
+    this.updateHeaderUI(); 
+  }
+  addScore(points){ 
+    if(this.state.isLockedTiny){
+      this.state.score = 55555;
+      this.saveState();
+      return;
+    }
+    this.state.score = Math.min(MAX_SCORE_CAP, this.state.score + points); 
+    this.addEXP(points*1.5); 
+    this.saveState(); 
+    this.popPill('pill-score'); 
+  }
+  addEXP(amount){
+    this.state.exp+=amount;
+    const newLevel=Math.floor(this.state.exp/100)+1;
+    if(newLevel>this.state.level){ this.state.level=newLevel; this.updateRank(); AudioEngine.playUnlockSFX(); this.popPill('pill-level'); }
+    this.saveState();
+  }
+  popPill(id){ const el=document.getElementById(id); if(!el) return; el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop'); }
+  updateRank(){
+    if(this.state.isLockedTiny){
+      this.state.rank="กระดอเล็กตลอดกาล";
+      return;
+    }
+    if(this.state.level>=20) this.state.rank="ASEAN Master";
+    else if(this.state.level>=12) this.state.rank="ASEAN Expert";
+    else if(this.state.level>=7) this.state.rank="Senior Traveler";
+    else if(this.state.level>=3) this.state.rank="Junior Traveler";
+    else this.state.rank="Beginner Explorer";
+  }
+  updateHeaderUI(){
+    document.getElementById('bar-score').innerText=this.state.score.toLocaleString();
+    document.getElementById('bar-level').innerText=this.state.level;
+    const hc=document.getElementById('home-countries'); if(hc) hc.innerText=`${this.state.completedCountries.length}/9`;
+    const hs=document.getElementById('home-score'); if(hs) hs.innerText=this.state.score.toLocaleString();
+    const hr=document.getElementById('home-rank'); if(hr) hr.innerText=this.state.rank;
+  }
+}
+const GameState = new StateManager();
+
+const StorageEngine = {
+  exportSaveJSON(){
+    const dataStr="data:text/json;charset=utf-8,"+encodeURIComponent(JSON.stringify(GameState.state));
+    const a=document.createElement('a'); a.setAttribute("href",dataStr); a.setAttribute("download",`asean_adventure_save_${Date.now()}.json`);
+    document.body.appendChild(a); a.click(); a.remove();
+  },
+  importSaveJSON(event){
+    const file=event.target.files[0]; if(!file) return;
+    const reader=new FileReader();
+    reader.onload=function(e){
+      try{
+        const imported=JSON.parse(e.target.result);
+        if(imported && imported.score!==undefined){ GameState.state=imported; GameState.saveState(); alert("นำเข้าข้อมูลเซฟสำเร็จ!"); location.reload(); }
+      }catch(err){ alert("ไฟล์ Save JSON ไม่ถูกต้อง!"); }
+    };
+    reader.readAsText(file);
+  },
+  resetGameData(){
+    if(confirm("คุณแน่ใจหรือไม่ว่าต้องการรีเซ็ตข้อมูลการเล่นทั้งหมด? (ไม่สามารถย้อนกลับได้)")){
+      localStorage.removeItem('ASEAN_ADVENTURE_SAVE'); location.reload();
+    }
+  }
+};
+
+const ThemeManager = {
+  toggleDarkMode(enable){ document.body.classList.toggle('dark-mode', enable); GameState.state.settings.dark=enable; GameState.saveState(); },
+  toggleA11y(enable){ document.body.classList.toggle('a11y-mode', enable); GameState.state.settings.a11y=enable; GameState.saveState(); },
+  toggleReduceMotion(enable){ document.body.classList.toggle('reduce-motion', enable); GameState.state.settings.motion=enable; GameState.saveState(); }
+};
+
+class CanvasFXEngine {
+  constructor(canvasId){
+    this.canvas=document.getElementById(canvasId); this.ctx=this.canvas.getContext('2d'); this.particles=[];
+    this.resize(); window.addEventListener('resize', ()=>this.resize()); this.loop();
+  }
+  resize(){ const r=this.canvas.parentElement.getBoundingClientRect(); this.canvas.width=r.width; this.canvas.height=r.height; }
+  triggerConfetti(){
+    const w=this.canvas.width, h=this.canvas.height;
+    for(let i=0;i<80;i++){
+      this.particles.push({ x:w/2, y:h/2, vx:(Math.random()-0.5)*12, vy:(Math.random()-0.8)*12, color:`hsl(${Math.random()*360},100%,50%)`, size:Math.random()*8+4, life:100 });
+    }
+  }
+  loop(){
+    this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
+    for(let i=this.particles.length-1;i>=0;i--){
+      const p=this.particles[i]; p.x+=p.vx; p.y+=p.vy; p.vy+=0.2; p.life--;
+      this.ctx.fillStyle=p.color; this.ctx.beginPath(); this.ctx.arc(p.x,p.y,p.size,0,Math.PI*2); this.ctx.fill();
+      if(p.life<=0) this.particles.splice(i,1);
+    }
+    requestAnimationFrame(()=>this.loop());
+  }
+}
+let FXEngine;
+window.addEventListener('DOMContentLoaded', ()=>{ FXEngine=new CanvasFXEngine('fx-canvas'); });
+
+const CountryDB = {
+  TH:{ id:"TH", nameTH:"ประเทศไทย", nameEN:"Thailand",
+    flagSvg:"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 600'><rect width='900' height='600' fill='%23A71930'/><rect y='100' width='900' height='400' fill='%23FFF'/><rect y='200' width='900' height='200' fill='%2300247D'/></svg>",
+    capital:"กรุงเทพมหานคร", population:"ประมาณ 66 ล้านคน", language:"ภาษาไทย", currency:"บาท (THB)", religion:"พุทธ (93.5%)",
+    flower:"ดอกราชพฤกษ์", animal:"ช้างไทย", area:"513,120 ตร.กม.",
+    geography:"ที่ราบลุ่มแม่น้ำเจ้าพระยา ทิวเขาถนนธงชัย และแปลงเกษตรกรรมอันอุดมสมบูรณ์",
+    economy:"ยานยนต์, อิเล็กทรอนิกส์, การท่องเที่ยว, เกษตรกรรม (ข้าว, ยางพารา)",
+    landmarks:["วัดพระแก้ว","วัดอรุณฯ","อุทยานแห่งชาติสุโขทัย"],
+    trivia:["1. ชื่อเต็มกรุงเทพฯ เป็นชื่อเมืองหลวงที่ยาวที่สุดในโลกตามบันทึก Guinness World Records","2. ไทยเป็นประเทศเดียวในเอเชียตะวันออกเฉียงใต้ที่ไม่เคยตกเป็นเมืองขึ้นของชาติตะวันตก","3. ธงไตรรงค์เริ่มใช้ในสมัยรัชกาลที่ 6 เมื่อปี พ.ศ. 2460","4. ดอกราชพฤกษ์บานสีเหลืองสวยงามในฤดูร้อน","5. ต้มยำกุ้งขึ้นทะเบียนเป็นมรดกภูมิปัญญาทางวัฒนธรรมโดย UNESCO","6. ไทยเป็นผู้ส่งออกข้าวและยางพารารายใหญ่ของโลก","7. พยัญชนะไทยมี 44 รูป 21 เสียง","8. ช้างไทยผูกพันกับประวัติศาสตร์ไทยมายาวนาน","9. ปลากัดไทยเป็นสัตว์น้ำประจำชาติ","10. เมืองหลวงเดิมคือกรุงธนบุรีและกรุงศรีอยุธยา"] },
+  LA:{ id:"LA", nameTH:"ประเทศลาว", nameEN:"Laos",
+    flagSvg:"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 600'><rect width='900' height='600' fill='%23CE1126'/><rect y='150' width='900' height='300' fill='%23002868'/><circle cx='450' cy='300' r='120' fill='%23FFF'/></svg>",
+    capital:"เวียงจันทน์", population:"ประมาณ 7.5 ล้านคน", language:"ภาษาลาว", currency:"กีบ (LAK)", religion:"พุทธ (66%)",
+    flower:"ดอกจำปาลาว", animal:"ช้าง", area:"236,800 ตร.กม.",
+    geography:"ประเทศเดียวในอาเซียนที่ไม่มีทางออกสู่ทะเล (Landlocked)",
+    economy:"พลังงานไฟฟ้าส่งออก, การทำเหมือง, การท่องเที่ยว",
+    landmarks:["พระธาตุหลวง","น้ำตกตาดกวางสี","ทุ่งไหหิน"],
+    trivia:["1. ลาวเป็นประเทศเดียวในอาเซียนที่ไม่มีทางออกสู่ทะเล","2. ได้รับขนานนามว่าเป็น 'แบตเตอรี่แห่งเอเชีย'","3. หลวงพระบางเป็นเมืองมรดกโลกทั้งเมือง","4. ดอกจำปาลาวสื่อถึงความบริสุทธิ์และมิตรภาพ","5. ทุ่งไหหินเป็นปริศนาทางประวัติศาสตร์","6. คนลาวกินข้าวเหนียวมากที่สุดในโลกต่อหัว","7. แม่น้ำโขงไหลผ่านลาวเป็นระยะทางยาวที่สุด","8. พระธาตุหลวงเป็นศาสนสถานสำคัญที่สุด","9. ภาษาลาวใกล้เคียงกับภาษาไทยอีสาน","10. น้ำตกตาดกวางสีมีสีฟ้าเทอร์ควอยซ์ที่มีชื่อเสียง"] },
+  MM:{ id:"MM", nameTH:"ประเทศเมียนมา", nameEN:"Myanmar",
+    flagSvg:"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 600'><rect width='900' height='200' fill='%23FECB00'/><rect y='200' width='900' height='200' fill='%23EA2839'/><rect y='400' width='900' height='200' fill='%2300B04F'/></svg>",
+    capital:"เนปยีดอ", population:"ประมาณ 54 ล้านคน", language:"พม่า", currency:"จ๊าด (MMK)", religion:"พุทธ (87.9%)",
+    flower:"ดอกประดู่", animal:"เสือโคร่ง", area:"676,578 ตร.กม.",
+    geography:"อุดมด้วยอัญมณี ไม้สัก และมีแนวชายฝั่งติดทะเลอันดามัน",
+    economy:"ก๊าซธรรมชาติ, ไม้สัก, อัญมณี, เกษตรกรรม",
+    landmarks:["มหาเจดีย์ชเวดากอง","ทะเลเจดีย์พุกาม","สะพานอูเบ็ง"],
+    trivia:["1. เมียนมาเปลี่ยนเมืองหลวงมาเป็นเนปยีดอเมื่อปี พ.ศ. 2548","2. แป้งทานาคาใช้ทาหน้าบำรุงผิวมานับพันปี","3. ทะเลเจดีย์พุกามมีเจดีย์กว่า 2,000 องค์","4. ชาวเมียนมานิยมสวม 'ลองยี' ในชีวิตประจำวัน","5. มหาเจดีย์ชเวดากองประดับทองคำแท้","6. สะพานอูเบ็งเป็นสะพานไม้สักที่ยาวที่สุดในโลก","7. เมียนมาใช้เขตเวลา UTC+6:30","8. ชนเผ่าอินทาแจวเรือด้วยเท้าข้างเดียว","9. เมียนมาเป็นแหล่งผลิตหยกคุณภาพสูง","10. ดอกประดู่บานพร้อมกันช่วงปีใหม่พม่า"] },
+  VN:{ id:"VN", nameTH:"ประเทศเวียดนาม", nameEN:"Vietnam",
+    flagSvg:"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 600'><rect width='900' height='600' fill='%23DA251D'/><polygon points='450,180 485,289 600,289 507,356 542,465 450,398 358,465 393,356 300,289 415,289' fill='%23FFFF00'/></svg>",
+    capital:"ฮานอย", population:"ประมาณ 98 ล้านคน", language:"ภาษาเวียดนาม", currency:"ดง (VND)", religion:"ไม่มีศาสนา/บรรพบุรุษ",
+    flower:"ดอกบัว", animal:"ควายน้ำ", area:"331,212 ตร.กม.",
+    geography:"รูปทรงแคบยาวคล้ายตัว S แนวชายฝั่งยาวกว่า 3,260 กม.",
+    economy:"อิเล็กทรอนิกส์, สิ่งทอ, กาแฟ (ส่งออก Robusta อันดับ 1), ข้าว",
+    landmarks:["อ่าวฮาลอง","เมืองโบราณฮอยอัน","มหานครโฮจิมินห์"],
+    trivia:["1. เวียดนามมีรูปร่างประเทศยาวแคบคล้ายตัว 'S'","2. ผู้ส่งออกกาแฟโรบัสต้ารายใหญ่ที่สุดในโลก","3. 'อ๋าวใหญ่' เป็นชุดประจำชาติที่งดงาม","4. อาหารเวียดนามใช้ผักสดและสมุนไพรมาก","5. อ่าวฮาลองมีเกาะหินปูนกว่า 1,600 เกาะ","6. มอเตอร์ไซค์เป็นยานพาหนะหลักกว่า 50 ล้านคัน","7. ฮอยอันเป็นเมืองท่าโบราณที่อนุรักษ์ไว้อย่างดี","8. ถ้ำเซินด่องใหญ่ที่สุดในโลก","9. กาแฟไข่กำเนิดที่กรุงฮานอย","10. ดอกบัวสื่อถึงความบริสุทธิ์"] },
+  MY:{ id:"MY", nameTH:"ประเทศมาเลเซีย", nameEN:"Malaysia",
+    flagSvg:"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 600'><rect width='900' height='600' fill='%23CC0000'/><rect width='450' height='342.8' fill='%23000066'/><circle cx='200' cy='171.4' r='100' fill='%23FFCC00'/><circle cx='230' cy='171.4' r='90' fill='%23000066'/></svg>",
+    capital:"กัวลาลัมเปอร์", population:"ประมาณ 33 ล้านคน", language:"ภาษามลายู", currency:"ริงกิต (MYR)", religion:"อิสลาม (61.3%)",
+    flower:"ดอกพู่ระหง", animal:"เสือโคร่งมลายู", area:"329,847 ตร.กม.",
+    geography:"แบ่งเป็นมาเลเซียตะวันตก (คาบสมุทร) และตะวันออก (บอร์เนียว)",
+    economy:"น้ำมันและก๊าซธรรมชาติ, ปาล์มน้ำมัน, เซมิคอนดักเตอร์",
+    landmarks:["อาคารแฝดเพตรอนาส","ถ้ำบาตู","จัตุรัสดัตช์มะละกา"],
+    trivia:["1. ตึกแฝดเพตรอนาสเคยเป็นตึกสูงที่สุดในโลก","2. แบ่งเป็นมาเลเซียตะวันตกและตะวันออก","3. มีระบบประมุขหมุนเวียน 9 รัฐทุก 5 ปี","4. นาซีเลอมักเป็นอาหารประจำชาติ","5. ถ้ำบาตูมีรูปปั้นพระขันธกุมารสีทองขนาดใหญ่","6. ดอกพู่ระหงมี 5 กลีบสื่อถึงหลักการแห่งรัฐ","7. มะละกาและจอร์จทาวน์เป็นมรดกโลก","8. เขาคินาบาลูสูง 4,095 เมตร","9. ชาชักมีศิลปะการเทสลับจนเกิดฟอง","10. สะพานปีนังยาวที่สุดในภูมิภาค"] },
+  SG:{ id:"SG", nameTH:"ประเทศสิงคโปร์", nameEN:"Singapore",
+    flagSvg:"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 600'><rect width='900' height='300' fill='%23ED2939'/><rect y='300' width='900' height='300' fill='%23FFF'/><circle cx='220' cy='150' r='100' fill='%23FFF'/><circle cx='250' cy='150' r='100' fill='%23ED2939'/></svg>",
+    capital:"สิงคโปร์", population:"ประมาณ 5.7 ล้านคน", language:"อังกฤษ/มลายู/จีน/ทมิฬ", currency:"ดอลลาร์สิงคโปร์ (SGD)", religion:"พุทธ (31%)",
+    flower:"กล้วยไม้แวนด้า มิส โจแอกคิม", animal:"สิงโต", area:"728.6 ตร.กม.",
+    geography:"นครรัฐเกาะขนาดเล็ก ศูนย์กลางการเงินและขนส่งทางเรือระดับโลก",
+    economy:"ศูนย์กลางการเงิน, ปิโตรเคมี, ท่าเรือขนส่ง, เทคโนโลยี",
+    landmarks:["เมอร์ไลออน","มารีนาเบย์แซนส์","Gardens by the Bay"],
+    trivia:["1. เป็นหนึ่งใน 3 นครรัฐที่สมบูรณ์แบบในโลก","2. เมอร์ไลออนหัวสิงโตตัวปลาเป็นสัญลักษณ์ประจำชาติ","3. ท่าเรือสิงคโปร์คึกคักที่สุดในโลก","4. กล้วยไม้แวนด้าทนทานและบานตลอดปี","5. ห้ามนำเข้าและเคี้ยวหมากฝรั่ง","6. สนามบินชางงีได้รับโหวตดีที่สุดในโลกบ่อยครั้ง","7. มารีนาเบย์แซนส์มีสระอินฟินิตี้ยาวที่สุด","8. ได้ฉายา 'City in a Garden'","9. เพลงชาติร้องด้วยภาษามลายู","10. ไนท์ซาฟารีแห่งแรกของโลกอยู่ที่นี่"] },
+  ID:{ id:"ID", nameTH:"ประเทศอินโดนีเซีย", nameEN:"Indonesia",
+    flagSvg:"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 600'><rect width='900' height='300' fill='%23CE1126'/><rect y='300' width='900' height='300' fill='%23FFF'/></svg>",
+    capital:"นูซันตารา (จาการ์ตาเดิม)", population:"ประมาณ 275 ล้านคน (มากที่สุดในอาเซียน)", language:"ภาษาอินโดนีเซีย", currency:"รูเปียห์ (IDR)", religion:"อิสลาม (87.2%)",
+    flower:"กล้วยไม้ราตรี", animal:"มังกรโคโมโด", area:"1,904,569 ตร.กม.",
+    geography:"ประเทศหมู่เกาะที่ใหญ่ที่สุดในโลก มีเกาะกว่า 17,000 เกาะ",
+    economy:"ถ่านหิน, ปาล์มน้ำมัน, แร่นิกเกิล, การท่องเที่ยว",
+    landmarks:["วัดโบโรบูดูร์","เกาะบาหลี","อุทยานแห่งชาติโคโมโด"],
+    trivia:["1. เป็นประเทศหมู่เกาะที่ใหญ่ที่สุดในโลกกว่า 17,000 เกาะ","2. มีประชากรมากที่สุดในอาเซียน","3. มังกรโคโมโดพบได้เฉพาะที่นี่เท่านั้น","4. วัดบรมพุทโธใหญ่ที่สุดในโลก","5. ผ้าบาติกเป็นมรดกทางวัฒนธรรมโดย UNESCO","6. กำลังย้ายเมืองหลวงไปนูซันตารา","7. เกาะบาหลีมีวัฒนธรรมฮินดูที่เป็นเอกลักษณ์","8. ตั้งอยู่บนวงแหวนแห่งไฟ","9. เรนดังเคยถูกโหวตอาหารอร่อยที่สุดในโลก","10. มีเขตเวลาต่างกันถึง 3 เขต"] },
+  PH:{ id:"PH", nameTH:"ประเทศฟิลิปปินส์", nameEN:"Philippines",
+    flagSvg:"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 600'><rect width='900' height='300' fill='%230038A8'/><rect y='300' width='900' height='300' fill='%23CE1126'/><polygon points='0,0 0,600 433,300' fill='%23FFF'/></svg>",
+    capital:"มะนิลา", population:"ประมาณ 110 ล้านคน", language:"ฟิลิปปินส์/อังกฤษ", currency:"เปโซ (PHP)", religion:"คริสต์คาทอลิก (80.6%)",
+    flower:"ดอกมะลิลา (Sampaguita)", animal:"นกอินทรีฟิลิปปินส์", area:"300,000 ตร.กม.",
+    geography:"ประกอบด้วยเกาะกว่า 7,600 เกาะ แบ่งเป็นลูซอน วิสายัส มินดาเนา",
+    economy:"การส่งออกแรงงาน/BPO, เซมิคอนดักเตอร์, เกษตรกรรม",
+    landmarks:["นาขั้นบันไดบานาเว","ช็อกโกแลตฮิลส์","ป้อมซันติอาโก"],
+    trivia:["1. ประกอบด้วยเกาะกว่า 7,600 เกาะ","2. ประชากรส่วนใหญ่นับถือคริสต์คาทอลิก","3. รถจีปนีย์เป็นสัญลักษณ์การเดินทาง","4. ช็อกโกแลตฮิลส์มีเนินเขากว่า 1,200 ลูก","5. นกอินทรีฟิลิปปินส์หายากที่สุดในโลก","6. นาขั้นบันไดบานาเวได้ฉายาสิ่งมหัศจรรย์อันดับ 8","7. อโดโบ้เป็นอาหารยอดนิยม","8. ใช้ภาษาอังกฤษได้ดีที่สุดในเอเชีย","9. ดอกสัมปากีตาสื่อถึงความบริสุทธิ์","10. เทศกาลไฟคริสต์มาสเริ่มตั้งแต่กันยายน"] },
+  BN:{ id:"BN", nameTH:"ประเทศบรูไนดารุสซาลาม", nameEN:"Brunei Darussalam",
+    flagSvg:"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 600'><rect width='900' height='600' fill='%23F7E017'/><polygon points='0,85 900,465 900,550 0,170' fill='%23FFF'/><polygon points='0,170 900,550 900,600 0,220' fill='%23000'/></svg>",
+    capital:"บันดาร์เสรีเบกาวัน", population:"ประมาณ 440,000 คน", language:"ภาษามลายู", currency:"ดอลลาร์บรูไน (BND)", religion:"อิสลาม (78.8%)",
+    flower:"ดอกซิมปอร์", animal:"อินทรีทะเลท้องขาว", area:"5,765 ตร.กม.",
+    geography:"ตั้งอยู่บนเกาะบอร์เนียว ล้อมรอบด้วยรัฐซาราวักของมาเลเซีย",
+    economy:"น้ำมันดิบและก๊าซธรรมชาติเกือบทั้งหมดของรายได้ประเทศ",
+    landmarks:["มัสยิดสุลต่านโอมาร์ อาลี ไซฟุดดิน","พระราชวังอิสตานา นูรุล อีมาน","กัมปงอาเยอร์"],
+    trivia:["1. ปกครองด้วยระบอบสมบูรณาญาสิทธิราชย์อิสลาม","2. ความมั่งคั่งมาจากน้ำมันดิบและก๊าซธรรมชาติ","3. พระราชวังอิสตานา นูรุล อีมานใหญ่ที่สุดในโลก","4. กัมปงอาเยอร์เป็นชุมชนกลางน้ำใหญ่ที่สุดในโลก","5. อัมบุยอัตเป็นอาหารประจำชาติ","6. ดอกซิมปอร์พบได้ทั่วไปตามลำธาร","7. ประชาชนได้รับสวัสดิการรัฐและไม่ต้องเสียภาษี","8. มัสยิดสุลต่านโอมาร์มียอดโดมทองคำแท้","9. เงินดอลลาร์บรูไนผูกค่ากับดอลลาร์สิงคโปร์ 1:1","10. ป่าฝนอุทยานอูลูเติมบูรองอุดมสมบูรณ์มาก"] }
+};
+
+const Router = {
+  currentView:'welcome',
+  navigate(viewId){
+    document.querySelectorAll('.view').forEach(el=>el.classList.remove('active'));
+    const target=document.getElementById(`view-${viewId}`);
+    if(target){
+      target.classList.add('active'); this.currentView=viewId;
+      document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active', b.dataset.view===viewId));
+      if(viewId==='country-select') RenderEngine.renderCountryGrid();
+      if(viewId==='passport') RenderEngine.renderPassport();
+      if(viewId==='shop') RenderEngine.renderShop();
+      if(viewId==='profile') RenderEngine.renderProfile();
+      if(viewId==='welcome') GameState.updateHeaderUI();
+      if(viewId==='ending') CertificateEngine.renderCertificate();
+    }
+  }
+};
+
+const RenderEngine = {
+  renderCountryGrid(){
+    const container=document.getElementById('country-cards-container'); container.innerHTML='';
+    Object.keys(CountryDB).forEach(code=>{
+      const country=CountryDB[code];
+      const isUnlocked=GameState.state.unlockedCountries.includes(code);
+      const isCompleted=GameState.state.completedCountries.includes(code);
+      const card=document.createElement('div');
+      card.className=`country-card ripple ${isUnlocked?'':'locked'}`;
+      card.onclick=()=>{ if(isUnlocked) QuizEngine.selectCountry(code); else alert("ประเทศนี้ยังไม่ปลดล็อก! ต้องเล่นผ่านประเทศก่อนหน้าก่อน"); };
+      card.innerHTML=`
+        ${!isUnlocked?'<div class="lock-badge">🔒</div>':''}
+        <div class="flag-ring"><img src="${country.flagSvg}" alt="${country.nameTH}"></div>
+        <h3>${country.nameTH}</h3>
+        <div class="cap">${country.capital}</div>
+        <div class="mini-bar"><div class="mini-bar-fill" style="width:${isCompleted?'100':'0'}%"></div></div>
+        <span class="status-chip ${isCompleted?'done':(isUnlocked?'ready':'locked')}">${isCompleted?'✅ ผ่านแล้ว':(isUnlocked?'🎮 พร้อมเล่น':'🔒 ล็อกอยู่')}</span>
+      `;
+      container.appendChild(card);
+    });
+  },
+  renderPassport(){
+    const container=document.getElementById('passport-stamps-container');
+    const countText=document.getElementById('passport-completed-count');
+    container.innerHTML=''; let completedCount=0;
+    Object.keys(CountryDB).forEach(code=>{
+      const country=CountryDB[code];
+      const isCompleted=GameState.state.completedCountries.includes(code);
+      if(isCompleted) completedCount++;
+      const stamp=document.createElement('div');
+      stamp.className=`stamp-slot ${isCompleted?'unlocked':''}`;
+      stamp.innerHTML=`<div class="ic">${isCompleted?'💮':'❓'}</div><div class="nm">${country.nameTH}</div><div class="st">${isCompleted?'PASSED':'LOCKED'}</div>`;
+      container.appendChild(stamp);
+    });
+    countText.innerText=completedCount;
+  }
+};
+
+const QuestionBank = {
+  TH:[
+    { q:"เมืองหลวงของประเทศไทยคือเมืองใด?", options:["กรุงเทพมหานคร","เชียงใหม่","ภูเก็ต","พัทยา"], answer:0, exp:"กรุงเทพมหานคร เป็นเมืองหลวงและศูนย์กลางการปกครองของไทย" },
+    { q:"ดอกไม้ประจำชาติของประเทศไทยคือดอกอะไร?", options:["ดอกกุหลาบ","ดอกราชพฤกษ์","ดอกมะลิ","ดอกกล้วยไม้"], answer:1, exp:"ดอกราชพฤกษ์ (คูน) สีเหลืองอร่ามเป็นดอกไม้ประจำชาติไทย" },
+    { q:"สัตว์ประจำชาติไทยคือสัตว์ชนิดใด?", options:["เสือโคร่ง","ช้างไทย","มหิงสา","ควายธนู"], answer:1, exp:"ช้างไทยมีความผูกพันกับประวัติศาสตร์ไทยมายาวนาน" },
+    { q:"สกุลเงินที่ใช้ในประเทศไทยคืออะไร?", options:["ดอลลาร์","บาท","กีบ","จ๊าด"], answer:1, exp:"ประเทศไทยใช้สกุลเงิน บาท (THB)" },
+    { q:"ประเพณีสงกรานต์ตรงกับเดือนใดของทุกปี?", options:["มกราคม","เมษายน","พฤศจิกายน","ธันวาคม"], answer:1, exp:"สงกรานต์ถือเป็นปีใหม่ไทย จัดขึ้นในเดือนเมษายน" },
+    { q:"ต้มยำกุ้ง มีรสชาติหลักตามข้อใด?", options:["หวานนำ","เปรี้ยวเผ็ด","เค็มจัด","จืด"], answer:1, exp:"ต้มยำกุ้งมีรสชาติเปรี้ยวเผ็ดกลมกล่อม" },
+    { q:"ประเทศไทยมีระบอบการปกครองแบบใด?", options:["สมบูรณาญาสิทธิราชย์","ประชาธิปไตยอันมีพระมหากษัตริย์ทรงเป็นประมุข","สาธารณรัฐ","สังคมนิยม"], answer:1, exp:"ไทยปกครองด้วยระบอบประชาธิปไตยอันมีพระมหากษัตริย์ทรงเป็นประมุข" },
+    { q:"วัดสำคัญใดที่ประดิษฐานพระแก้วมรกต?", options:["วัดอรุณราชวราราม","วัดพระศรีรัตนศาสดาราม","วัดโพธิ์","วัดสระเกศ"], answer:1, exp:"พระแก้วมรกตประดิษฐาน ณ วัดพระศรีรัตนศาสดาราม" },
+    { q:"ภาษาทางราชการของประเทศไทยคือภาษาใด?", options:["ภาษาไทย","ภาษาอังกฤษ","ภาษาจีน","ภาษามลายู"], answer:0, exp:"ภาษาไทยเป็นภาษาทางการประจำชาติ" },
+    { q:"มรดกโลกทางวัฒนธรรมแห่งแรกของไทยคือที่ใด?", options:["สุโขทัยและเมืองบริวาร","เขาใหญ่","บ้านเชียง","แก่งกระจาน"], answer:0, exp:"อุทยานประวัติศาสตร์สุโขทัยขึ้นทะเบียนเป็นมรดกโลกแห่งแรกๆ" }
+  ],
+  LA:[
+    { q:"เมืองหลวงของประเทศลาวคือเมืองใด?", options:["หลวงพระบาง","เวียงจันทน์","ปากเซ","สะวันนะเขต"], answer:1, exp:"นครหลวงเวียงจันทน์เป็นเมืองหลวงของลาว" },
+    { q:"ลาวเป็นประเทศเดียวในอาเซียนที่มีลักษณะภูมิศาสตร์อย่างไร?", options:["เป็นเกาะทั้งหมด","ไม่มีทางออกสู่ทะเล","มีภูเขาไฟมากที่สุด","มีทะเลทราย"], answer:1, exp:"ลาวเป็นประเทศ Landlocked ไม่มีพื้นที่ติดทะเล" },
+    { q:"สกุลเงินของประเทศลาวคืออะไร?", options:["กีบ","บาท","ดง","เรียล"], answer:0, exp:"ลาวใช้สกุลเงิน กีบ (LAK)" },
+    { q:"ดอกไม้ประจำชาติลาวคือดอกอะไร?", options:["ดอกจำปาลาว","ดอกบัว","ดอกกล้วยไม้","ดอกชบา"], answer:0, exp:"ดอกจำปาลาวสื่อถึงความบริสุทธิ์และมิตรภาพ" },
+    { q:"เมืองมรดกโลกที่มีชื่อเสียงด้านวัฒนธรรมของลาวคือเมืองใด?", options:["เวียงจันทน์","หลวงพระบาง","วังเวียง","จำปาสัก"], answer:1, exp:"หลวงพระบางได้รับการยกย่องเป็นเมืองมรดกโลกทั้งเมือง" }
+  ],
+  MM:[
+    { q:"เมืองหลวงปัจจุบันของประเทศเมียนมาคือเมืองใด?", options:["ย่างกุ้ง","มัณฑะเลย์","เนปยีดอ","พุกาม"], answer:2, exp:"เมียนมาย้ายเมืองหลวงมายัง 'เนปยีดอ' ในปี พ.ศ. 2548" },
+    { q:"ผ้านุ่งดั้งเดิมที่ชาวเมียนมานิยมสวมใส่เรียกว่าอะไร?", options:["โสร่ง","ลองยี","ซิ่น","โสร่งบาติก"], answer:1, exp:"ลองยีเป็นผ้านุ่งดั้งเดิมของชาวเมียนมา" },
+    { q:"แป้งสมุนไพรธรรมชาติที่ชาวเมียนมาใช้ทาหน้าคืออะไร?", options:["ทานาคา","ขมิ้น","ดินสอพอง","แป้งเย็น"], answer:0, exp:"ทานาคาช่วยบำรุงผิวและป้องกันแสงแดด" }
+  ],
+  VN:[
+    { q:"เมืองหลวงของประเทศเวียดนามคือเมืองใด?", options:["โฮจิมินห์ซิตี้","ฮานอย","ดานัง","เว้"], answer:1, exp:"กรุงฮานอยเป็นเมืองหลวงตั้งอยู่ทางตอนเหนือ" },
+    { q:"ชุดประจำชาติของสตรีเวียดนามเรียกว่าอะไร?", options:["กิโมโน","อ๋าวใหญ่","ฮันบก","เคบายา"], answer:1, exp:"อ๋าวใหญ่เป็นชุดยาวผ่าข้างสวมทับกางเกงขายาว" },
+    { q:"อาหารเวียดนามที่เป็นก๋วยเตี๋ยวน้ำใสขึ้นชื่อคืออะไร?", options:["เฝอ","ราเมง","ต้มยำ","ลักซา"], answer:0, exp:"เฝอมีน้ำซุปเคี่ยวกลมกล่อม" }
+  ],
+  MY:[
+    { q:"เมืองหลวงของประเทศมาเลเซียคือเมืองใด?", options:["กัวลาลัมเปอร์","ปีนัง","ยะโฮร์บาห์รู","มะละกา"], answer:0, exp:"กัวลาลัมเปอร์เป็นเมืองหลวงและเมืองที่ใหญ่ที่สุด" },
+    { q:"ตึกแฝดที่มีชื่อเสียงระดับโลกในกัวลาลัมเปอร์คือตึกใด?", options:["เพตรอนาส","ใบหยก","เบิร์จคาลิฟา","ไทเป 101"], answer:0, exp:"อาคารแฝดเพตรอนาสเป็นสัญลักษณ์ความเจริญของมาเลเซีย" }
+  ],
+  SG:[
+    { q:"สัญลักษณ์ประจำชาติสิงคโปร์ที่มีหัวเป็นสิงโตตัวเป็นปลาคืออะไร?", options:["เมอร์ไลออน","มังกร","กริฟฟิน","สฟิงซ์"], answer:0, exp:"เมอร์ไลออนตั้งอยู่บริเวณปากอ่าวมารีนาเบย์" },
+    { q:"สกุลเงินของประเทศสิงคโปร์คืออะไร?", options:["ดอลลาร์สิงคโปร์","ริงกิต","เปโซ","บาท"], answer:0, exp:"สิงคโปร์ใช้สกุลเงิน ดอลลาร์สิงคโปร์" }
+  ],
+  ID:[
+    { q:"ประเทศที่มีประชากรมากที่สุดในอาเซียนคือประเทศใด?", options:["ไทย","เวียดนาม","อินโดนีเซีย","ฟิลิปปินส์"], answer:2, exp:"อินโดนีเซียมีประชากรกว่า 275 ล้านคน มากที่สุดในอาเซียน" },
+    { q:"ศาสนสถานพุทธมหายานที่ใหญ่ที่สุดในโลกในอินโดนีเซียคือที่ใด?", options:["วัดบรมพุทโธ","พรัมบานัน","นครวัด","วัดพระแก้ว"], answer:0, exp:"บรมพุทโธเป็นมรดกโลกศาสนาพุทธบนเกาะชวา" }
+  ],
+  PH:[
+    { q:"ประเทศฟิลิปปินส์นับถือศาสนาใดเป็นหลัก?", options:["พุทธ","อิสลาม","คริสต์โรมันคาทอลิก","ฮินดู"], answer:2, exp:"ฟิลิปปินส์เป็นประเทศส่วนใหญ่ที่นับถือคริสต์คาทอลิกในอาเซียน" },
+    { q:"ยานพาหนะโดยสารหลากสีสันที่เป็นเอกลักษณ์ของฟิลิปปินส์คืออะไร?", options:["รถตุ๊กตุ๊ก","รถจีปนีย์","รถซาเล้ง","แท็กซี่"], answer:1, exp:"รถจีปนีย์ดัดแปลงมาจากรถจีปทหารสหรัฐฯ" }
+  ],
+  BN:[
+    { q:"ประเทศบรูไนตั้งอยู่บนเกาะใดในภูมิภาคอาเซียน?", options:["เกาะสุมาตรา","เกาะบอร์เนียว","เกาะชวา","เกาะลูซอน"], answer:1, exp:"บรูไนตั้งอยู่ทางตอนเหนือของเกาะบอร์เนียว" },
+    { q:"รายได้หลักของประเทศบรูไนมาจากทรัพยากรธรรมชาติใด?", options:["ปาล์มน้ำมัน","น้ำมันดิบและก๊าซธรรมชาติ","การท่องเที่ยว","ประมง"], answer:1, exp:"บรูไนอุดมสมบูรณ์ด้วยปิโตรเลียมและก๊าซธรรมชาติ" }
+  ]
+};
+
+class QuizController {
+  constructor(){ this.currentCountryCode=null; this.questions=[]; this.currentIndex=0; this.score=0; this.combo=1; this.streak=0; }
+
+  selectCountry(code){
+    this.currentCountryCode=code;
+    const country=CountryDB[code];
+    const detailContainer=document.getElementById('country-detail-content');
+    detailContainer.innerHTML=`
+      <div class="detail-head">
+        <img src="${country.flagSvg}" alt="${country.nameTH}">
+        <div><h2>${country.nameTH}</h2><p>${country.nameEN} · เมืองหลวง ${country.capital}</p></div>
+      </div>
+      <div class="chip-row">
+        <div class="chip">ภาษา: <b>${country.language}</b></div>
+        <div class="chip">สกุลเงิน: <b>${country.currency}</b></div>
+        <div class="chip">ประชากร: <b>${country.population}</b></div>
+        <div class="chip">พื้นที่: <b>${country.area}</b></div>
+        <div class="chip">ดอกไม้ประจำชาติ: <b>${country.flower}</b></div>
+        <div class="chip">สัตว์ประจำชาติ: <b>${country.animal}</b></div>
+      </div>
+      <p style="margin-top:14px; font-size:.82rem; line-height:1.6; color:var(--ink-soft);">${country.geography}</p>
+      <p style="margin-top:6px; font-size:.82rem;"><b>สถานที่ท่องเที่ยวสำคัญ:</b> ${country.landmarks.join(', ')}</p>
+      <div class="trivia-box">
+        <h4>💡 เกร็ดความรู้น่ารู้</h4>
+        <ul>${country.trivia.map(t=>`<li>${t}</li>`).join('')}</ul>
+      </div>
+    `;
+    Router.navigate('country-detail');
+  }
+
+  startQuiz(){
+    const pool=QuestionBank[this.currentCountryCode]||QuestionBank['TH'];
+    this.questions=[...pool].sort(()=>0.5-Math.random()).slice(0,10);
+    this.currentIndex=0; this.score=0; this.combo=1; this.streak=0;
+    Router.navigate('quiz'); this.renderQuestion();
+  }
+
+  renderQuestion(){
+    document.getElementById('quiz-explanation-box').style.display='none';
+    const qData=this.questions[this.currentIndex];
+    document.getElementById('quiz-progress-text').innerText=`ข้อที่ ${this.currentIndex+1} / ${this.questions.length}`;
+    document.getElementById('quiz-progress-bar').style.width=`${((this.currentIndex+1)/this.questions.length)*100}%`;
+    document.getElementById('quiz-question-text').innerText=qData.q;
+    document.getElementById('combo-multiplier').innerText=this.combo;
+    const optionsContainer=document.getElementById('quiz-options-container'); optionsContainer.innerHTML='';
+    const letters=['ก','ข','ค','ง'];
+    const optionIndices=[0,1,2,3].sort(()=>0.5-Math.random());
+    optionIndices.forEach((originalIdx,pos)=>{
+      if(qData.options[originalIdx]!==undefined){
+        const btn=document.createElement('button');
+        btn.className='option-btn ripple';
+        btn.innerHTML=`<span style="background:#eef4ff;color:var(--sea-deep);font-weight:800;border-radius:8px;padding:3px 9px;font-size:.78rem;">${letters[pos]}</span> ${qData.options[originalIdx]}`;
+        btn.onclick=()=>this.checkAnswer(originalIdx, btn);
+        optionsContainer.appendChild(btn);
+      }
+    });
+  }
+
+  checkAnswer(selectedIdx, btnEl){
+    const qData=this.questions[this.currentIndex];
+    document.querySelectorAll('.option-btn').forEach(b=>b.onclick=null);
+    const isCorrect=(selectedIdx===qData.answer);
+    const nextBtn = document.getElementById('quiz-next-btn');
+
+    if(isCorrect){
+      btnEl.classList.add('correct'); AudioEngine.playCorrectSFX(); FXEngine.triggerConfetti();
+      this.streak++; if(this.streak>=3) this.combo=2; if(this.streak>=5) this.combo=3;
+      const gainedPoints=10*this.combo; this.score+=gainedPoints; GameState.addScore(gainedPoints);
+      document.getElementById('quiz-result-title').innerText=`🎉 ถูกต้อง! (+${gainedPoints} คะแนน)`;
+      document.getElementById('quiz-result-title').style.color='var(--leaf-deep)';
+      document.getElementById('quiz-explanation-text').innerText=qData.exp;
+      
+      nextBtn.innerText = 'ข้อถัดไป ➡️';
+      nextBtn.onclick = () => this.nextQuestion();
+    } else {
+      btnEl.classList.add('wrong'); AudioEngine.playWrongSFX(); this.combo=1; this.streak=0;
+      document.getElementById('quiz-result-title').innerText=`❌ ตอบผิด! ต้องเริ่มทำใหม่`;
+      document.getElementById('quiz-result-title').style.color='var(--coral-deep)';
+      document.getElementById('quiz-explanation-text').innerText=`${qData.exp}\n\n⚠️ คุณตอบผิดข้อนี้ ต้องเริ่มทำแบบทดสอบใหม่ทั้งหมดในประเทศนี้เพื่อสะสมตราประทับ!`;
+      
+      nextBtn.innerText = '🔄 ตอบผิด! เริ่มใหม่ตั้งแต่ข้อ 1';
+      nextBtn.onclick = () => this.startQuiz();
+    }
+    document.getElementById('quiz-explanation-box').style.display='block';
+  }
+
+  nextQuestion(){
+    this.currentIndex++;
+    if(this.currentIndex<this.questions.length) this.renderQuestion();
+    else this.finishQuiz();
+  }
+
+  finishQuiz(){
+    let stampGained=false;
+    if(!GameState.state.completedCountries.includes(this.currentCountryCode)){
+      GameState.state.completedCountries.push(this.currentCountryCode); stampGained=true;
+      const countryKeys=Object.keys(CountryDB);
+      const currentIdx=countryKeys.indexOf(this.currentCountryCode);
+      if(currentIdx+1<countryKeys.length){
+        const nextCode=countryKeys[currentIdx+1];
+        if(!GameState.state.unlockedCountries.includes(nextCode)) GameState.state.unlockedCountries.push(nextCode);
+      }
+      GameState.saveState();
+    }
+    document.getElementById('result-score-text').innerText=`คะแนนที่ได้: ${this.score} คะแนน`;
+    document.getElementById('result-exp-gained').innerText=`+${Math.round(this.score*1.5)} EXP`;
+    document.getElementById('result-stamp-unlocked-box').style.display=stampGained?'block':'none';
+    document.getElementById('result-emoji').innerText = this.score>=80 ? '🏆' : (this.score>=50 ? '🎉' : '🧭');
+    Router.navigate('result'); FXEngine.triggerConfetti();
+    if(GameState.state.completedCountries.length>=9) setTimeout(()=>Router.navigate('ending'),2000);
+  }
+}
+const QuizEngine = new QuizController();
+
+// รายการไอเทมร้านค้า 21 รายการเต็มรูปแบบ
+const ShopItems = [
+  { id:"frame_gold", name:"กรอบทองคำแท้", price:100, icon:"🖼️", desc:"กรอบโปรไฟล์ทองคำหรูหราประดับฉายา" },
+  { id:"plane_jet", name:"เครื่องบินเจ็ทส่วนตัว", price:200, icon:"🛩️", desc:"สกินเครื่องบินความเร็วสูงประจำตัว" },
+  { id:"suit_pilot", name:"ชุดกัปตันเครื่องบิน", price:150, icon:"👨‍✈️", desc:"อวตารกัปตันสายการบินสุดเท่" },
+  { id:"title_master", name:"ฉายา: เซียนอาเซียน", price:300, icon:"👑", desc:"ฉายาพิเศษประดับโปรไฟล์นักเดินทาง" },
+  { id:"passport_gold", name:"พาสปอร์ตทองคำ", price:250, icon:"📕", desc:"สมุดพาสปอร์ตเล่มทองคำระดับพรีเมียม" },
+  { id:"tuk_tuk", name:"รถตุ๊กตุ๊กซิ่ง", price:120, icon:"🛺", desc:"พาหนะเอกลักษณ์ยอดฮิตประจำประเทศไทย" },
+  { id:"camera_pro", name:"กล้องถ่ายรูปโปร", price:180, icon:"📷", desc:"บันทึกภาพความประทับใจทุกมรดกโลก" },
+  { id:"backpack_pro", name:"เป้เดินทางจุใจ", price:90, icon:"🎒", desc:"กระเป๋าเป้ขนาดใหญ่ใส่ของฝากได้ครบ 9 ประเทศ" },
+  { id:"title_explorer", name:"ฉายา: นักสำรวจไร้พรมแดน", price:400, icon:"🌍", desc:"ประดับฉายาผู้ท่องโลกกว้างไร้ขีดจำกัด" },
+  { id:"hat_explorer", name:"หมวกซาฟารีนักสำรวจ", price:80, icon:"🤠", desc:"หมวกกันแดดพร้อมลุยป่าและศาสนสถาน" },
+  { id:"badge_asean", name:"เข็มตราอาเซียน", price:350, icon:"🏅", desc:"เข็มเกียรติยศสันติภาพและมิตรภาพ" },
+  { id:"coffee_cup", name:"กาแฟโรบัสต้าดริป", price:50, icon:"☕", desc:"จิบกาแฟสดหอมหวานส่งตรงจากเวียดนาม" },
+  { id:"ship_cruise", name:"เรือสำราญหรู", price:500, icon:"🚢", desc:"ล่องเรือชมหมู่เกาะอินโดนีเซียและฟิลิปปินส์" },
+  { id:"title_rich", name:"ฉายา: มหาเศรษฐีน้ำมัน", price:1000, icon:"💎", desc:"ฉายามหาเศรษฐีผู้ทรงอิทธิพลแห่งคาบสมุทร" },
+  { id:"flag_banner", name:"ธงโบกสะบัดอาเซียน", price:110, icon:"🚩", desc:"ธงที่ระลึกฉลองชัยชนะทุกดินแดน" },
+  { id:"lantern_hoian", name:"โคมไฟฮอยอัน", price:130, icon:"🏮", desc:"โคมไฟประดับประดาหลากสีสันส่องสว่าง" },
+  { id:"coconut_juice", name:"มะพร้าวหอมเย็นเจี๊ยบ", price:40, icon:"🥥", desc:"เครื่องดื่มสดชื่นดับร้อนริมชายหาด" },
+  { id:"instrument_gamelan", name:"เครื่องดนตรีโบราณ", price:220, icon:"🪕", desc:"บทเพลงพื้นเมืองขับกล่อมตลอดการเดินทาง" },
+  { id:"title_legend", name:"ฉายา: ตำนานเดินได้", price:2000, icon:"🌟", desc:"สุดยอดฉายาของผู้พิชิตทุกคำถามอาเซียน" },
+  { id:"stamp_collector", name:"กล่องสะสมตราประทับ", price:300, icon:"📦", desc:"กล่องหรูหราสำหรับจัดเก็บทุกตราประทับ" },
+  { id:"troll_tiny", name:"ฉายา: กระดอเล็กตลอดกาล", price:0, icon:"🤏", desc:"กดรับฉายาลับ ล็อคแต้มที่ 55,555 และล็อคไม่ให้ซื้อไอเทมอื่นอีก!" }
+];
+
+const ShopEngine = {
+  buyItem(itemId, price){
+    // ถ้าเคยซื้อไอเทมกวน "🤏 กระดอเล็กตลอดกาล" ไปแล้ว ห้ามซื้ออย่างอื่นอีกเด็ดขาด
+    if(GameState.state.isLockedTiny && itemId !== "troll_tiny"){
+      alert("🔒 ไม่สามารถซื้อไอเทมอื่นได้อีก! เพราะคุณมีฉายา 'กระดอเล็กตลอดกาล' และร้านค้าถูกล็อคแล้ว");
+      return;
+    }
+
+    if(itemId === "troll_tiny"){
+      if(confirm("⚠️ เตือนภัย! หากรับฉายานี้ คะแนนจะถูกล็อคไว้ที่ 55,555 แต้ม และจะไม่สามารถซื้อไอเทมชิ้นอื่นในร้านค้าได้อีกเลย! ยืนยันหรือไม่?")){
+        GameState.state.isLockedTiny = true;
+        GameState.state.score = 55555;
+        GameState.state.rank = "กระดอเล็กตลอดกาล";
+        GameState.state.activeTitle = "กระดอเล็กตลอดกาล";
+        if(!GameState.state.inventory.includes(itemId)){
+          GameState.state.inventory.push(itemId);
+        }
+        GameState.saveState();
+        AudioEngine.playUnlockSFX();
+        if(window.FXEngine) FXEngine.triggerConfetti();
+        alert("🤏 ยินดีด้วย! คุณได้รับฉายา 'กระดอเล็กตลอดกาล' แต้มถูกล็อคที่ 55,555 และล็อคการซื้อไอเทมอื่นทั้งหมดเรียบร้อย!");
+        RenderEngine.renderShop();
+        if(Router.currentView === 'profile') RenderEngine.renderProfile();
+      }
+      return;
+    }
+
+    if(GameState.state.score>=price || GameState.state.neverDecrease){
+      if(!GameState.state.inventory.includes(itemId)){
+        if(!GameState.state.neverDecrease){
+          GameState.state.score-=price; 
+        }
+        GameState.state.inventory.push(itemId); GameState.saveState();
+        AudioEngine.playUnlockSFX(); RenderEngine.renderShop();
+      } else alert("คุณมีไอเท็มนี้แล้ว!");
+    } else alert("คะแนนสะสมไม่เพียงพอ!");
+  }
+};
+
+RenderEngine.renderShop=function(){
+  const container=document.getElementById('shop-items-container'); container.innerHTML='';
+  ShopItems.forEach(item=>{
+    const isBought=GameState.state.inventory.includes(item.id);
+    const isLockedOut = GameState.state.isLockedTiny && item.id !== "troll_tiny";
+    const card=document.createElement('div'); card.className='shop-card';
+    
+    let btnText = 'แลกของรางวัล';
+    let btnClass = 'btn-gold';
+    if(isBought){
+      btnText = 'ซื้อแล้ว ✅';
+      btnClass = 'btn-leaf';
+    } else if(isLockedOut){
+      btnText = '🔒 ถูกล็อค';
+      btnClass = 'btn-coral';
+    }
+
+    card.innerHTML=`
+      <div class="ic">${item.icon}</div>
+      <h4>${item.name}</h4><p>${item.desc}</p>
+      <p class="price">⭐ ${item.price.toLocaleString()}</p>
+      <button class="btn ${btnClass} ripple btn-block" style="margin-top:10px; font-size:.76rem; padding:9px;"
+        onclick="ShopEngine.buyItem('${item.id}', ${item.price})" ${(isBought || isLockedOut)?'disabled':''}>
+        ${btnText}
+      </button>`;
+    container.appendChild(card);
+  });
+};
+
+const AchievementEngine = {
+  list: Array.from({length:100},(_,i)=>({
+    id:`ach_${i+1}`,
+    title: i===0?"ก้าวแรกสู่อาเซียน":(i===1?"นักเดินทางฝึกหัด":`ความสำเร็จระดับที่ ${i+1}`),
+    desc: i===0?"ตอบคำถามถูกต้องข้อแรก":`สะสมคะแนนและความคืบหน้าครบขั้นที่ ${i+1}`,
+    icon: i%2===0?"🏆":"⭐"
+  }))
+};
+
+RenderEngine.renderProfile=function(){
+  document.getElementById('profile-total-score').innerText=GameState.state.score.toLocaleString();
+  document.getElementById('profile-rank-display').innerText=GameState.state.rank;
+  document.getElementById('achievement-unlocked-count').innerText=GameState.state.achievements.length;
+  const container=document.getElementById('achievements-list-container'); container.innerHTML='';
+  AchievementEngine.list.slice(0,15).forEach(ach=>{
+    const isUnlocked=GameState.state.achievements.includes(ach.id);
+    const item=document.createElement('div'); item.className='ach-item';
+    item.style.opacity=isUnlocked?1:0.5;
+    item.innerHTML=`<div class="ic">${ach.icon}</div><div><strong>${ach.title}</strong><p>${ach.desc}</p></div>`;
+    container.appendChild(item);
+  });
+};
+
+const CertificateEngine = {
+  renderCertificate(){
+    const canvas=document.getElementById('cert-canvas'); const ctx=canvas.getContext('2d');
+    ctx.fillStyle="#fdf6e3"; ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.strokeStyle="#c1272d"; ctx.lineWidth=12; ctx.strokeRect(20,20,canvas.width-40,canvas.height-40);
+    ctx.strokeStyle="#ffca28"; ctx.lineWidth=4; ctx.strokeRect(32,32,canvas.width-64,canvas.height-64);
+    ctx.fillStyle="#132352"; ctx.font="bold 32px Sarabun, sans-serif"; ctx.textAlign="center";
+    ctx.fillText("ใบประกาศนียบัตรผู้พิชิตอาเซียน", canvas.width/2, 100);
+    ctx.fillStyle="#555"; ctx.font="18px Sarabun, sans-serif";
+    ctx.fillText("ขอมอบใบประกาศนียบัตรนี้เพื่อแสดงว่า", canvas.width/2, 150);
+    ctx.fillStyle="#c1272d"; ctx.font="bold 36px Sarabun, sans-serif";
+    ctx.fillText("นักเดินทางผู้กล้าหาญ", canvas.width/2, 220);
+    ctx.fillStyle="#333"; ctx.font="20px Sarabun, sans-serif";
+    ctx.fillText("ได้ตอบคำถามและพิชิตภารกิจความรู้ครบทั้ง 9 ประเทศสมาชิกอาเซียน", canvas.width/2, 280);
+    ctx.fillText(`คะแนนสะสมรวมทั้งสิ้น: ${GameState.state.score} คะแนน | ระดับ: ${GameState.state.rank}`, canvas.width/2, 330);
+    ctx.beginPath(); ctx.arc(canvas.width/2, 420, 45, 0, Math.PI*2); ctx.fillStyle="#ffca28"; ctx.fill();
+    ctx.strokeStyle="#c1272d"; ctx.lineWidth=3; ctx.stroke();
+    ctx.fillStyle="#c1272d"; ctx.font="bold 14px Sarabun, sans-serif"; ctx.fillText("ASEAN MASTER", canvas.width/2, 425);
+    ctx.fillStyle="#555"; ctx.font="16px Sarabun, sans-serif";
+    ctx.fillText("จัดทำโดย: จิราภา หยุยจันทึก", canvas.width/2, 485);
+    ctx.fillStyle="#777"; ctx.font="14px Sarabun, sans-serif";
+    ctx.fillText(`ออกให้ ณ วันที่: ${new Date().toLocaleDateString('th-TH')}`, canvas.width/2, 515);
+  },
+  downloadCertificate(){
+    const canvas=document.getElementById('cert-canvas'); const link=document.createElement('a');
+    link.download=`ASEAN_Adventure_Certificate_${Date.now()}.png`; link.href=canvas.toDataURL('image/png'); link.click();
+  }
+};
+
+const RedeemEngine = {
+  applyCode(code){
+    const cleanCode = code.trim().toUpperCase();
+    if(cleanCode === "TEAM"){
+      if(!GameState.state.isLockedTiny){
+        GameState.state.score = MAX_SCORE_CAP;
+      }
+      GameState.state.neverDecrease = true;
+      GameState.saveState();
+      AudioEngine.playUnlockSFX();
+      if(FXEngine) FXEngine.triggerConfetti();
+      alert("🎉 สำเร็จ! ปลดล็อกโหมดแต้มไม่มีวันลดเรียบร้อย!");
+      return true;
+    }
+    return false;
+  },
+  submitSettingCode(){
+    const input = document.getElementById('setting-redeem-input');
+    if(this.applyCode(input.value)){
+      input.value = "";
+    } else {
+      alert("❌ โค้ดไม่ถูกต้อง");
+    }
+  }
+};
+
+const SecretCodeEngine = {
+  _taps: 0,
+  _timer: null,
+  registerTap(){
+    this._taps++;
+    clearTimeout(this._timer);
+    this._timer = setTimeout(()=>{ this._taps = 0; }, 2500);
+    if(this._taps >= 5){
+      this._taps = 0;
+      this.open();
+    }
+  },
+  open(){
+    document.getElementById('secret-code-msg').textContent = '';
+    document.getElementById('secret-code-input').value = '';
+    document.getElementById('secret-modal').classList.add('active');
+    setTimeout(()=>document.getElementById('secret-code-input').focus(), 150);
+  },
+  close(){ document.getElementById('secret-modal').classList.remove('active'); },
+  submit(){
+    const input = document.getElementById('secret-code-input').value;
+    const msg = document.getElementById('secret-code-msg');
+    if(RedeemEngine.applyCode(input)){
+      msg.textContent = 'ปลดล็อกสำเร็จ!';
+      msg.className = 'code-msg ok';
+      setTimeout(()=>this.close(), 900);
+    } else {
+      msg.textContent = 'รหัสไม่ถูกต้อง';
+      msg.className = 'code-msg err';
+      const card = document.querySelector('#secret-modal .modal-card');
+      card.style.animation = 'none'; void card.offsetWidth; card.style.animation = 'shakeX .4s';
+    }
+  }
+};
+
+document.getElementById('brand-tap-zone').addEventListener('click', ()=>SecretCodeEngine.registerTap());
+document.getElementById('secret-code-input').addEventListener('keydown', (e)=>{ if(e.key==='Enter') SecretCodeEngine.submit(); });
+
+window.addEventListener('load', ()=>{
+  GameState.updateHeaderUI();
+  if(GameState.state.settings.dark) ThemeManager.toggleDarkMode(true);
+  if(GameState.state.settings.a11y) ThemeManager.toggleA11y(true);
+  if(GameState.state.settings.motion) ThemeManager.toggleReduceMotion(true);
+  document.getElementById('setting-sfx-toggle').checked = GameState.state.settings.sfx;
+  document.getElementById('setting-bgm-toggle').checked = GameState.state.settings.bgm;
+  document.getElementById('setting-dark-toggle').checked = GameState.state.settings.dark;
+  document.getElementById('setting-a11y-toggle').checked = GameState.state.settings.a11y;
+  document.getElementById('setting-motion-toggle').checked = GameState.state.settings.motion;
+});
+</script>
+</body>
+</html>
